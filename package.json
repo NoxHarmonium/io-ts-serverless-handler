@@ -1,0 +1,42 @@
+{
+  "name": "io-ts-serverless-handler",
+  "version": "1.0.0",
+  "description": "Wrappers for Serverless Framework HTTP handlers that use io-ts",
+  "main": "dist/index.js",
+  "author": "Sean Dawson <contact@seandawson.info>",
+  "license": "Apache-2.0",
+  "peerDependencies": {
+    "fp-ts": "^1.19.5",
+    "io-ts": "^1.10.4"
+  },
+  "scripts": {
+    "prepare": "tsc",
+    "build": "tsc",
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "lint-fix": "tslint --fix -p tsconfig.json -c tslint.json",
+    "format-check": "prettier-check src/**/*",
+    "type-coverage": "type-coverage --strict --detail --ignore-catch",
+    "format": "prettier --write '{src,test}/**/*.{ts,tsx}'",
+    "commit": "git-cz"
+  },
+  "devDependencies": {
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "3.0.2",
+    "fp-ts": "^2.4.0",
+    "io-ts": "^2.0.4",
+    "prettier": "^1.19.1",
+    "prettier-check": "^2.0.0",
+    "tslint": "^5.20.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-immutable": "^6.0.1",
+    "tslint-sonarts": "^1.9.0",
+    "type-coverage": "^2.4.0",
+    "typescript": "^3.7.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
