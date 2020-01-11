@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when wrapping a standard handler when the payload is valid should succeed 1`] = `Promise {}`;

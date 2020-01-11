@@ -12,6 +12,7 @@
   "scripts": {
     "prepare": "tsc",
     "build": "tsc",
+    "test": "jest",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "lint-fix": "tslint --fix -p tsconfig.json -c tslint.json",
     "format-check": "prettier-check src/**/*",
@@ -20,12 +21,16 @@
     "commit": "git-cz"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.39",
+    "@types/jest": "^24.0.25",
     "commitizen": "^4.0.3",
     "cz-conventional-changelog": "3.0.2",
-    "fp-ts": "^2.4.0",
-    "io-ts": "^2.0.4",
+    "fp-ts": "^1.19.5",
+    "io-ts": "^1.10.4",
+    "jest": "^24.9.0",
     "prettier": "^1.19.1",
     "prettier-check": "^2.0.0",
+    "ts-jest": "^24.3.0",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",
