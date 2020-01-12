@@ -1,6 +1,7 @@
-import { APIGatewayProxyEvent } from "aws-lambda";
-import { Either } from "fp-ts/lib/Either";
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import { either, left } from "fp-ts/lib/Either";
 import * as t from "io-ts";
+import { PathReporter } from "io-ts/lib/PathReporter";
 
 type ExtractableParameters = Pick<
   APIGatewayProxyEvent,
@@ -42,71 +43,101 @@ export type HandlerFunction<ExtractionMap extends ExtractionMapBase> = (
   values: ValueMap<ExtractionMap>
 ) => Promise<unknown>;
 
-const decodeParam = <CodecType extends t.Any, ReturnType = t.TypeOf<CodecType>>(
-  codec: CodecType,
-  value: unknown
-): ReturnType => {
-  const result: Either<t.Errors, ReturnType> = codec.decode(value);
-  if (result.isLeft()) {
-    throw new Error("oops");
-  }
-  return result.value;
-};
+export type ValidationErrorHandler = (
+  errors: t.Errors
+) => APIGatewayProxyResult;
+export type UnhandledErrorHandler = (error: unknown) => APIGatewayProxyResult;
+export type SuccessHandler = <ResultType>(
+  result: ResultType
+) => APIGatewayProxyResult;
 
-const decodeBody = <CodecType extends t.Any, ReturnType = t.TypeOf<CodecType>>(
-  codec: CodecType,
-  value: unknown
-): ReturnType => {
-  if (typeof value !== "string") {
-    // Future work: does this need to support bodies other than JSON?
-    throw new Error("The body parameter must be well formed JSON.");
-  }
-  const parsedObject = JSON.parse(value);
-  const result: Either<t.Errors, ReturnType> = codec.decode(parsedObject);
-  if (result.isLeft()) {
-    throw new Error("oops");
-  }
-  return result.value;
-};
+export type JSONObject = { readonly [key: string]: JSON };
+export interface JSONArray extends Array<JSON> {}
+export type JSON = null | string | number | boolean | JSONArray | JSONObject;
 
-const processCodecs = <
-  CodecMap extends CodecMapBase,
-  ParamMap extends Record<string, unknown>
->(
-  codecMap: CodecMap,
-  paramMap: ParamMap | null
-): TransformCodecToValue<CodecMap> => {
-  const keys = Object.keys(codecMap) as ReadonlyArray<keyof CodecMap>;
-  return keys.reduce(
-    (prev, key) => ({
-      ...prev,
-      [key]: decodeParam(
-        codecMap[key],
-        paramMap === null ? null : paramMap[key as string]
-      )
+const jsonFromStringCodec = new t.Type<JSON, string, unknown>(
+  "JSONFromString",
+  (u): u is JSON => u !== undefined,
+  (u, c) =>
+    either.chain(t.string.validate(u, c), s => {
+      try {
+        return t.success(JSON.parse(s));
+      } catch (e) {
+        if (e instanceof Error) {
+          return t.failure(u, c, e.message);
+        } else {
+          return t.failure(u, c, "Unknown error");
+        }
+      }
     }),
-    {} as TransformCodecToValue<CodecMap>
-  );
-};
+  a => JSON.stringify(a)
+);
 
-export const codecHandler = <ExtractionMap extends ExtractionMapBase>(
-  codecMaps: ExtractionMap,
-  handlerFn: HandlerFunction<ExtractionMap>
-) => (event: APIGatewayProxyEvent) => {
-  const keys = Object.keys(codecMaps) as ReadonlyArray<
-    keyof ExtractionMap & keyof ExtractableParameters
-  >;
-  const flat = keys.reduce((prev, key) => {
-    if (key === "body") {
-      return prev;
+const defaultValidationErrorHandler: ValidationErrorHandler = e => ({
+  statusCode: 400,
+  body: JSON.stringify({
+    error: PathReporter.report(left(e)).join(", ")
+  })
+});
+
+const defaultUnhandledErrorHandler: UnhandledErrorHandler = e => ({
+  statusCode: 500,
+  body: JSON.stringify({
+    error: `Unhandled error: ${JSON.stringify(e)}`
+  })
+});
+
+const defaultSuccessHandler: SuccessHandler = e => ({
+  statusCode: 200,
+  body: JSON.stringify(e)
+});
+
+export const configureWrapper = ({
+  validationErrorHandler = defaultValidationErrorHandler,
+  unhandledErrorHandler = defaultUnhandledErrorHandler,
+  successHandler = defaultSuccessHandler
+}: {
+  readonly validationErrorHandler?: ValidationErrorHandler;
+  readonly unhandledErrorHandler?: UnhandledErrorHandler;
+  readonly successHandler?: SuccessHandler;
+}) => {
+  return <ExtractionMap extends ExtractionMapBase>(
+    codecMaps: ExtractionMap,
+    handlerFn: HandlerFunction<ExtractionMap>
+  ) => async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+    const keys = Object.keys(codecMaps) as ReadonlyArray<keyof ExtractionMap>;
+
+    const mergedParameterCodecs = keys
+      .filter(key => key !== "body" && codecMaps[key] !== undefined)
+      .reduce((prev, key) => {
+        // TODO: Work out why this needs to be force casted
+        const subMap = (codecMaps[key] as unknown) as CodecMapBase;
+        return { ...prev, [key]: t.type(subMap) };
+      }, {});
+
+    const mergedCodecs =
+      codecMaps.body === undefined
+        ? mergedParameterCodecs
+        : {
+            ...mergedParameterCodecs,
+            body: jsonFromStringCodec.pipe(codecMaps.body)
+          };
+
+    const rootCodec = t.type(mergedCodecs);
+    const decoded = rootCodec.decode(event) as t.Validation<
+      ValueMap<ExtractionMap>
+    >;
+
+    if (decoded.isLeft()) {
+      return validationErrorHandler(decoded.value);
     }
-    const codecMap: CodecMapBase = codecMaps[key] as CodecMapBase;
-    return { ...prev, [key]: processCodecs(codecMap, event[key]) };
-  }, {} as ValueMap<ExtractionMap>);
-  return codecMaps.body !== undefined
-    ? handlerFn({
-        ...flat,
-        body: decodeBody(codecMaps.body, event.body)
-      })
-    : handlerFn(flat);
+
+    try {
+      const result = await handlerFn(decoded.value);
+
+      return successHandler(result);
+    } catch (e) {
+      return unhandledErrorHandler(e);
+    }
+  };
 };

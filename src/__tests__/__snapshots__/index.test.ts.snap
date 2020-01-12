@@ -1,3 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when wrapping a standard handler when the payload is valid should succeed 1`] = `Promise {}`;
+exports[`when wrapping a standard handler when the payload is invalid should list every error 1`] = `
+Object {
+  "body": "{\\"error\\":\\"Invalid value \\\\\\"string\\\\\\" supplied to : { queryStringParameters: { pageSize: number }, body: pipe(JSONFromString, { message: string }) }/queryStringParameters: { pageSize: number }/pageSize: number, Invalid value false supplied to : { queryStringParameters: { pageSize: number }, body: pipe(JSONFromString, { message: string }) }/body: pipe(JSONFromString, { message: string })\\"}",
+  "statusCode": 400,
+}
+`;
+
+exports[`when wrapping a standard handler when the payload is valid should succeed 1`] = `
+Object {
+  "body": "{\\"pageSize\\":6,\\"body\\":{\\"message\\":\\"hello\\"}}",
+  "statusCode": 200,
+}
+`;

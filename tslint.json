@@ -18,7 +18,8 @@
     "no-expression-statement": false,
     "no-throw": false,
     "no-if-statement": false,
-    "no-console": false
+    "no-console": false,
+    "no-try": false
   },
   "rulesDirectory": []
 }
