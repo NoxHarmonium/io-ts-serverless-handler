@@ -1,29 +1,68 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when wrapping a standard handler when the codec definition has a body when the payload is invalid should list every error 1`] = `
+exports[`when providing custom handlers when an unhandled error occurs should return a internal server error 1`] = `"{\\"oops\\":\\"{}\\",\\"custom\\":true}"`;
+
+exports[`when providing custom handlers when the payload is invalid should list every error 1`] = `
+Object {
+  "body": "{\\"error\\":[{\\"context\\":[{\\"key\\":\\"\\",\\"type\\":{\\"name\\":\\"{ queryStringParameters: { pageNumber: number } }\\",\\"props\\":{\\"queryStringParameters\\":{\\"name\\":\\"{ pageNumber: number }\\",\\"props\\":{\\"pageNumber\\":{\\"name\\":\\"number\\",\\"_tag\\":\\"NumberType\\"}},\\"_tag\\":\\"InterfaceType\\"}},\\"_tag\\":\\"InterfaceType\\"},\\"actual\\":{\\"queryStringParameters\\":{\\"pageSize\\":\\"string\\"},\\"body\\":false}},{\\"key\\":\\"queryStringParameters\\",\\"type\\":{\\"name\\":\\"{ pageNumber: number }\\",\\"props\\":{\\"pageNumber\\":{\\"name\\":\\"number\\",\\"_tag\\":\\"NumberType\\"}},\\"_tag\\":\\"InterfaceType\\"},\\"actual\\":{\\"pageSize\\":\\"string\\"}},{\\"key\\":\\"pageNumber\\",\\"type\\":{\\"name\\":\\"number\\",\\"_tag\\":\\"NumberType\\"}}]}],\\"custom\\":true}",
+  "statusCode": 400,
+}
+`;
+
+exports[`when providing custom handlers when the payload is valid should succeed 1`] = `
+Object {
+  "body": "{\\"result\\":{\\"hello\\":\\"there\\",\\"params\\":{\\"pageNumber\\":4}},\\"custom\\":true}",
+  "statusCode": 200,
+}
+`;
+
+exports[`when using default options when providing extra parameters not defined in the codec should  not strip the extra parameters 1`] = `
+Object {
+  "body": "{\\"queryStringParameters\\":{\\"pageNumber\\":4,\\"extraParameter\\":\\"hello\\"},\\"pathParameters\\":{\\"something\\":true}}",
+  "statusCode": 200,
+}
+`;
+
+exports[`when using default options when the codec definition has a body when an unhandled error occurs should return an internal server error 1`] = `"{\\"error\\":\\"Unhandled error: {}\\"}"`;
+
+exports[`when using default options when the codec definition has a body when the payload is invalid should list every error 1`] = `
 Object {
   "body": "{\\"error\\":\\"Invalid value \\\\\\"string\\\\\\" supplied to : { queryStringParameters: { pageSize: number }, body: pipe(JSONFromString, { message: string }) }/queryStringParameters: { pageSize: number }/pageSize: number, Invalid value false supplied to : { queryStringParameters: { pageSize: number }, body: pipe(JSONFromString, { message: string }) }/body: pipe(JSONFromString, { message: string })\\"}",
   "statusCode": 400,
 }
 `;
 
-exports[`when wrapping a standard handler when the codec definition has a body when the payload is valid should succeed 1`] = `
+exports[`when using default options when the codec definition has a body when the payload is valid should succeed 1`] = `
 Object {
   "body": "{\\"pageSize\\":6,\\"body\\":{\\"message\\":\\"hello\\"}}",
   "statusCode": 200,
 }
 `;
 
-exports[`when wrapping a standard handler when the codec definition has optional parameters when the optional parameter is supplied should succeed 1`] = `
+exports[`when using default options when the codec definition has optional parameters when the optional parameter is supplied should succeed 1`] = `
 Object {
   "body": "{\\"hello\\":\\"there\\",\\"params\\":{\\"pageNumber\\":4,\\"pageSize\\":9}}",
   "statusCode": 200,
 }
 `;
 
-exports[`when wrapping a standard handler when the codec definition has optional parameters when the optional parameter isn't supplied should succeed 1`] = `
+exports[`when using default options when the codec definition has optional parameters when the optional parameter isn't supplied should succeed 1`] = `
 Object {
   "body": "{\\"hello\\":\\"there\\",\\"params\\":{\\"pageNumber\\":4}}",
+  "statusCode": 200,
+}
+`;
+
+exports[`when using strict mode when providing extra parameters not defined in the codec should strip the extra parameters 1`] = `
+Object {
+  "body": "{\\"queryStringParameters\\":{\\"pageNumber\\":4}}",
+  "statusCode": 200,
+}
+`;
+
+exports[`when using strict mode when providing the exact required input should succeed 1`] = `
+Object {
+  "body": "{\\"queryStringParameters\\":{\\"pageNumber\\":4}}",
   "statusCode": 200,
 }
 `;

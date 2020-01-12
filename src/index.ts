@@ -32,7 +32,12 @@ export const configureWrapper = (config: HandlerConfig | undefined) => <
   codecMaps: EventMap,
   handlerFn: HandlerFunction<EventMap, ReturnType>
 ) => async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  const { validationErrorHandler, unhandledErrorHandler, successHandler } = {
+  const {
+    validationErrorHandler,
+    unhandledErrorHandler,
+    successHandler,
+    strict
+  } = {
     ...defaultConfig,
     ...config
   };
@@ -46,7 +51,7 @@ export const configureWrapper = (config: HandlerConfig | undefined) => <
     .reduce((prev, key) => {
       // TODO: Work out why this needs to be force casted
       const subMap = (codecMaps[key] as unknown) as CodecMapBase;
-      return { ...prev, [key]: t.type(subMap) };
+      return { ...prev, [key]: strict ? t.strict(subMap) : t.type(subMap) };
     }, {});
 
   const mergedCodecs =
@@ -60,7 +65,7 @@ export const configureWrapper = (config: HandlerConfig | undefined) => <
         };
 
   // Turn the root codec definition into an actual codec
-  const rootCodec = t.type(mergedCodecs);
+  const rootCodec = strict ? t.strict(mergedCodecs) : t.type(mergedCodecs);
   // Make io-ts do the hard work of validating the event object
   const decoded = rootCodec.decode(event) as t.Validation<ValueMap<EventMap>>;
 
