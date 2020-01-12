@@ -1,9 +1,13 @@
 {
   "name": "io-ts-serverless-handler",
   "version": "1.0.0",
-  "description": "Wrappers for Serverless Framework HTTP handlers that use io-ts",
+  "description": "A simple wrapper for Serverless Framework HTTP handlers to remove the boilerplate of using io-ts codecs to validate and extract request parameters",
   "main": "dist/index.js",
   "author": "Sean Dawson <contact@seandawson.info>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NoxHarmonium/io-ts-serverless-handler"
+  },
   "license": "Apache-2.0",
   "peerDependencies": {
     "fp-ts": "^1.19.5",
