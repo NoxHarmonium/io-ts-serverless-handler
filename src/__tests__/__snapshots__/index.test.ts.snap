@@ -1,15 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when wrapping a standard handler when the payload is invalid should list every error 1`] = `
+exports[`when wrapping a standard handler when the codec definition has a body when the payload is invalid should list every error 1`] = `
 Object {
   "body": "{\\"error\\":\\"Invalid value \\\\\\"string\\\\\\" supplied to : { queryStringParameters: { pageSize: number }, body: pipe(JSONFromString, { message: string }) }/queryStringParameters: { pageSize: number }/pageSize: number, Invalid value false supplied to : { queryStringParameters: { pageSize: number }, body: pipe(JSONFromString, { message: string }) }/body: pipe(JSONFromString, { message: string })\\"}",
   "statusCode": 400,
 }
 `;
 
-exports[`when wrapping a standard handler when the payload is valid should succeed 1`] = `
+exports[`when wrapping a standard handler when the codec definition has a body when the payload is valid should succeed 1`] = `
 Object {
   "body": "{\\"pageSize\\":6,\\"body\\":{\\"message\\":\\"hello\\"}}",
+  "statusCode": 200,
+}
+`;
+
+exports[`when wrapping a standard handler when the codec definition has optional parameters when the optional parameter is supplied should succeed 1`] = `
+Object {
+  "body": "{\\"hello\\":\\"there\\",\\"params\\":{\\"pageNumber\\":4,\\"pageSize\\":9}}",
+  "statusCode": 200,
+}
+`;
+
+exports[`when wrapping a standard handler when the codec definition has optional parameters when the optional parameter isn't supplied should succeed 1`] = `
+Object {
+  "body": "{\\"hello\\":\\"there\\",\\"params\\":{\\"pageNumber\\":4}}",
   "statusCode": 200,
 }
 `;

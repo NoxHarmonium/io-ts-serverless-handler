@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`defaultSuccessHandler when handling the handler output should format the output correctly 1`] = `
+Object {
+  "body": "{\\"some\\":\\"object\\"}",
+  "statusCode": 200,
+}
+`;
+
+exports[`defaultUnhandledErrorHandler when handling a validation error should format the output correctly 1`] = `
+Object {
+  "body": "{\\"error\\":\\"Unhandled error: {}\\"}",
+  "statusCode": 500,
+}
+`;
+
+exports[`defaultValidationErrorHandler when handling a validation error should format the output correctly 1`] = `
+Object {
+  "body": "{\\"error\\":\\"Invalid value 4 supplied to : string\\"}",
+  "statusCode": 400,
+}
+`;

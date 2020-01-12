@@ -1,0 +1,189 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`jsonFromStringCodec when decoding a invalid input fails when decoding [""] 1`] = `
+Array [
+  Object {
+    "context": Array [
+      Object {
+        "actual": "",
+        "key": "",
+        "type": Type {
+          "decode": [Function],
+          "encode": [Function],
+          "is": [Function],
+          "name": "JSONFromString",
+          "validate": [Function],
+        },
+      },
+    ],
+    "message": "Unexpected end of JSON input",
+    "value": "",
+  },
+]
+`;
+
+exports[`jsonFromStringCodec when decoding a invalid input fails when decoding ["{ \\"hello\\": 4 "] 1`] = `
+Array [
+  Object {
+    "context": Array [
+      Object {
+        "actual": "{ \\"hello\\": 4 ",
+        "key": "",
+        "type": Type {
+          "decode": [Function],
+          "encode": [Function],
+          "is": [Function],
+          "name": "JSONFromString",
+          "validate": [Function],
+        },
+      },
+    ],
+    "message": "Unexpected end of JSON input",
+    "value": "{ \\"hello\\": 4 ",
+  },
+]
+`;
+
+exports[`jsonFromStringCodec when decoding a invalid input fails when decoding ["dfsjlsf"] 1`] = `
+Array [
+  Object {
+    "context": Array [
+      Object {
+        "actual": "dfsjlsf",
+        "key": "",
+        "type": Type {
+          "decode": [Function],
+          "encode": [Function],
+          "is": [Function],
+          "name": "JSONFromString",
+          "validate": [Function],
+        },
+      },
+    ],
+    "message": "Unexpected token d in JSON at position 0",
+    "value": "dfsjlsf",
+  },
+]
+`;
+
+exports[`jsonFromStringCodec when decoding a invalid input fails when decoding ["undefined"] 1`] = `
+Array [
+  Object {
+    "context": Array [
+      Object {
+        "actual": "undefined",
+        "key": "",
+        "type": Type {
+          "decode": [Function],
+          "encode": [Function],
+          "is": [Function],
+          "name": "JSONFromString",
+          "validate": [Function],
+        },
+      },
+    ],
+    "message": "Unexpected token u in JSON at position 0",
+    "value": "undefined",
+  },
+]
+`;
+
+exports[`jsonFromStringCodec when decoding a invalid input fails when decoding [8] 1`] = `
+Array [
+  Object {
+    "context": Array [
+      Object {
+        "actual": 8,
+        "key": "",
+        "type": Type {
+          "decode": [Function],
+          "encode": [Function],
+          "is": [Function],
+          "name": "JSONFromString",
+          "validate": [Function],
+        },
+      },
+    ],
+    "message": undefined,
+    "value": 8,
+  },
+]
+`;
+
+exports[`jsonFromStringCodec when decoding a invalid input fails when decoding [false] 1`] = `
+Array [
+  Object {
+    "context": Array [
+      Object {
+        "actual": false,
+        "key": "",
+        "type": Type {
+          "decode": [Function],
+          "encode": [Function],
+          "is": [Function],
+          "name": "JSONFromString",
+          "validate": [Function],
+        },
+      },
+    ],
+    "message": undefined,
+    "value": false,
+  },
+]
+`;
+
+exports[`jsonFromStringCodec when decoding a invalid input fails when decoding [null] 1`] = `
+Array [
+  Object {
+    "context": Array [
+      Object {
+        "actual": null,
+        "key": "",
+        "type": Type {
+          "decode": [Function],
+          "encode": [Function],
+          "is": [Function],
+          "name": "JSONFromString",
+          "validate": [Function],
+        },
+      },
+    ],
+    "message": undefined,
+    "value": null,
+  },
+]
+`;
+
+exports[`jsonFromStringCodec when decoding a invalid input fails when decoding [undefined] 1`] = `
+Array [
+  Object {
+    "context": Array [
+      Object {
+        "actual": undefined,
+        "key": "",
+        "type": Type {
+          "decode": [Function],
+          "encode": [Function],
+          "is": [Function],
+          "name": "JSONFromString",
+          "validate": [Function],
+        },
+      },
+    ],
+    "message": undefined,
+    "value": undefined,
+  },
+]
+`;
+
+exports[`jsonFromStringCodec when decoding a valid input succeeds when decoding ["{ \\"hello\\": 4 }"] 1`] = `
+Object {
+  "hello": 4,
+}
+`;
+
+exports[`jsonFromStringCodec when decoding a valid input succeeds when decoding ["8"] 1`] = `8`;
+
+exports[`jsonFromStringCodec when decoding a valid input succeeds when decoding ["false"] 1`] = `false`;
+
+exports[`jsonFromStringCodec when decoding a valid input succeeds when decoding ["null"] 1`] = `null`;
