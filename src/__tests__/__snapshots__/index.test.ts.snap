@@ -46,6 +46,13 @@ Object {
 }
 `;
 
+exports[`when using default options when the codec definition has optional parameters when the optional parameter is null should succeed 1`] = `
+Object {
+  "body": "{\\"hello\\":\\"there\\",\\"params\\":{\\"pageNumber\\":4}}",
+  "statusCode": 200,
+}
+`;
+
 exports[`when using default options when the codec definition has optional parameters when the optional parameter is supplied should succeed 1`] = `
 Object {
   "body": "{\\"hello\\":\\"there\\",\\"params\\":{\\"pageNumber\\":4,\\"pageSize\\":9,\\"someHeader\\":6}}",

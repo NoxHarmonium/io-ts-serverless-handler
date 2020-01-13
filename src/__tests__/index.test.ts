@@ -136,6 +136,19 @@ describe("when using default options", () => {
         expect(result).toMatchSnapshot();
       });
     });
+    describe("when the optional parameter is null", () => {
+      const mockEvent = ({
+        queryStringParameters: {
+          pageNumber: 4
+        },
+        headers: null
+      } as unknown) as APIGatewayProxyEvent;
+      it("should succeed", async () => {
+        const result = await handler(mockEvent);
+        expect(result.statusCode).toEqual(200);
+        expect(result).toMatchSnapshot();
+      });
+    });
     describe("when the optional parameter is supplied", () => {
       const mockEvent = ({
         queryStringParameters: {

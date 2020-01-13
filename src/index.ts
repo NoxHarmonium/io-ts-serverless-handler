@@ -8,11 +8,12 @@ import {
 } from "./default-handlers";
 import {
   EventMapBase,
+  ExtractableParameters,
   HandlerConfig,
   HandlerFunction,
-  ValueMap,
-  ExtractableParameters
+  ValueMap
 } from "./types";
+import { removeEmpty } from "./utils";
 
 const defaultConfig: Required<HandlerConfig> = {
   validationErrorHandler: defaultValidationErrorHandler,
@@ -86,7 +87,7 @@ export const configureWrapper = (config: HandlerConfig | undefined) => <
   // Make io-ts do the hard work of validating the event object
   const decoded = rootCodec.decode({
     ...defaultEvent,
-    ...event
+    ...removeEmpty(event)
   }) as t.Validation<ValueMap<EventMap>>;
 
   if (decoded.isLeft()) {
