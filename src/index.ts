@@ -7,11 +7,11 @@ import {
   defaultValidationErrorHandler
 } from "./default-handlers";
 import {
-  CodecMapBase,
   EventMapBase,
   HandlerConfig,
   HandlerFunction,
-  ValueMap
+  ValueMap,
+  ExtractableParameters
 } from "./types";
 
 const defaultConfig: Required<HandlerConfig> = {
@@ -19,6 +19,16 @@ const defaultConfig: Required<HandlerConfig> = {
   unhandledErrorHandler: defaultUnhandledErrorHandler,
   successHandler: defaultSuccessHandler,
   strict: false
+};
+
+const defaultEvent: Required<ExtractableParameters> = {
+  headers: {},
+  multiValueHeaders: {},
+  pathParameters: {},
+  queryStringParameters: {},
+  multiValueQueryStringParameters: {},
+  stageVariables: {},
+  body: null
 };
 
 /**
@@ -50,24 +60,34 @@ export const configureWrapper = (config: HandlerConfig | undefined) => <
     .filter(key => key !== "body" && codecMaps[key] !== undefined)
     .reduce((prev, key) => {
       // TODO: Work out why this needs to be force casted
-      const subMap = (codecMaps[key] as unknown) as CodecMapBase;
-      return { ...prev, [key]: strict ? t.strict(subMap) : t.type(subMap) };
+      // tslint:disable: no-any
+      const subMap = (codecMaps[key] as unknown) as
+        | t.TypeC<any>
+        | t.PartialC<any>;
+      // tslint:enable: no-any
+
+      return subMap === undefined
+        ? prev
+        : { ...prev, [key]: strict ? t.exact(subMap) : subMap };
     }, {});
 
   const mergedCodecs =
     codecMaps.body === undefined
-      ? mergedParameterCodecs
-      : {
+      ? (mergedParameterCodecs as ValueMap<EventMap>)
+      : ({
           ...mergedParameterCodecs,
           // The body must first be a valid string, then valid JSON then parsed
           // and validated against the codec that is provided in the codec map
           body: jsonFromStringCodec.pipe(codecMaps.body)
-        };
+        } as ValueMap<EventMap>);
 
   // Turn the root codec definition into an actual codec
   const rootCodec = strict ? t.strict(mergedCodecs) : t.type(mergedCodecs);
   // Make io-ts do the hard work of validating the event object
-  const decoded = rootCodec.decode(event) as t.Validation<ValueMap<EventMap>>;
+  const decoded = rootCodec.decode({
+    ...defaultEvent,
+    ...event
+  }) as t.Validation<ValueMap<EventMap>>;
 
   if (decoded.isLeft()) {
     // There was an error validating the event

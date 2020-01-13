@@ -18,42 +18,25 @@ export type ExtractableParameters = Pick<
   | "queryStringParameters"
   | "multiValueQueryStringParameters"
   | "stageVariables"
+  | "body"
 >;
-
-/**
- * A map of codecs
- */
-export type CodecMapBase = {
-  readonly [name: string]: t.Any;
-};
 
 /**
  * Defines how to validate the properties in a handler event
  */
 export type EventMapBase = Partial<
   {
-    readonly [p in keyof ExtractableParameters]: CodecMapBase;
-  } & {
-    readonly body: t.Any;
+    readonly // tslint:disable-next-line: no-any
+    [p in keyof ExtractableParameters]: t.TypeC<any> | t.PartialC<any>;
   }
 >;
-
-/*
- * Takes a type that extends CodecMapBase and converts it
- * to a type that represents the type that io-ts will decode to
- */
-export type TransformCodecToValue<CodecMap extends CodecMapBase> = {
-  [k in keyof CodecMap]: t.TypeOf<CodecMap[k]>;
-};
 
 /**
  * Takes an EventMap and converts it to the type that represents
  * the type that io-ts will decode it to
  */
 export type ValueMap<EventMap extends EventMapBase> = {
-  readonly [p in keyof EventMap]: TransformCodecToValue<
-    Filter<EventMap[p], CodecMapBase>
-  >;
+  readonly [p in keyof EventMap]: t.TypeOf<Filter<EventMap[p], t.Any>>;
 };
 
 /**

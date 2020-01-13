@@ -8,9 +8,9 @@ describe("when using default options", () => {
   const codecHandler = configureWrapper({});
   describe("when the codec definition has a body", () => {
     const mockSchema = {
-      queryStringParameters: {
+      queryStringParameters: t.type({
         pageSize: t.number
-      },
+      }),
       body: t.type({
         message: t.string
       })
@@ -68,9 +68,9 @@ describe("when using default options", () => {
     describe("when an unhandled error occurs", () => {
       const brokenHandler = codecHandler(
         {
-          queryStringParameters: {
+          queryStringParameters: t.type({
             pageNumber: t.number
-          }
+          })
         },
         // tslint:disable-next-line: no-reject
         async () => Promise.reject(new Error("oops"))
@@ -91,16 +91,23 @@ describe("when using default options", () => {
   describe("when the codec definition has optional parameters", () => {
     const handler = codecHandler(
       {
-        queryStringParameters: {
+        queryStringParameters: t.type({
           pageNumber: t.number,
           pageSize: t.union([t.undefined, t.number])
-        }
+        }),
+        headers: t.partial({
+          someHeader: t.number
+        })
       },
-      async ({ queryStringParameters: { pageNumber, pageSize } }) => ({
+      async ({
+        queryStringParameters: { pageNumber, pageSize },
+        headers: { someHeader }
+      }) => ({
         hello: "there",
         params: {
           pageNumber,
-          pageSize
+          pageSize,
+          someHeader
         }
       })
     );
@@ -116,11 +123,27 @@ describe("when using default options", () => {
         expect(result).toMatchSnapshot();
       });
     });
+    describe("when the optional parameter is empty", () => {
+      const mockEvent = ({
+        queryStringParameters: {
+          pageNumber: 4
+        },
+        headers: {}
+      } as unknown) as APIGatewayProxyEvent;
+      it("should succeed", async () => {
+        const result = await handler(mockEvent);
+        expect(result.statusCode).toEqual(200);
+        expect(result).toMatchSnapshot();
+      });
+    });
     describe("when the optional parameter is supplied", () => {
       const mockEvent = ({
         queryStringParameters: {
           pageNumber: 4,
           pageSize: 9
+        },
+        headers: {
+          someHeader: 6
         }
       } as unknown) as APIGatewayProxyEvent;
       it("should succeed", async () => {
@@ -133,9 +156,9 @@ describe("when using default options", () => {
   describe("when providing extra parameters not defined in the codec", () => {
     const handler = codecHandler(
       {
-        queryStringParameters: {
+        queryStringParameters: t.type({
           pageNumber: t.number
-        }
+        })
       },
       async params => params
     );
@@ -162,9 +185,9 @@ describe("when using strict mode", () => {
   });
   const strictHandler = strictCodecHandler(
     {
-      queryStringParameters: {
+      queryStringParameters: t.type({
         pageNumber: t.number
-      }
+      })
     },
     async params => params
   );
@@ -224,9 +247,9 @@ describe("when providing custom handlers", () => {
   });
   const handler = customCodecHandler(
     {
-      queryStringParameters: {
+      queryStringParameters: t.type({
         pageNumber: t.number
-      }
+      })
     },
     async ({ queryStringParameters: { pageNumber } }) => ({
       hello: "there",
@@ -278,9 +301,9 @@ describe("when providing custom handlers", () => {
   describe("when an unhandled error occurs", () => {
     const brokenHandler = customCodecHandler(
       {
-        queryStringParameters: {
+        queryStringParameters: t.type({
           pageNumber: t.number
-        }
+        })
       },
       // tslint:disable-next-line: no-reject
       async () => Promise.reject(new Error("oops"))

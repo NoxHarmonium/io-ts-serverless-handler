@@ -31,13 +31,13 @@ import { codecHandler } from "./codec-handler.ts";
 
 export const getUsers = codecHandler(
   {
-    queryParameters: {
-      pageSize: t.union([t.undefined, t.number]),
-      pageNumber: t.union([t.undefined, t.number])
-    },
-    pathParameters: {
+    queryParameters: t.partial({
+      pageSize: t.number,
+      pageNumber: t.number
+    }),
+    pathParameters: t.type({
       userId: t.string
-    }
+    })
   },
   async ({
     queryParameters: { pageSize, pageNumber },

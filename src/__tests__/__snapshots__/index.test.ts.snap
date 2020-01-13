@@ -4,7 +4,7 @@ exports[`when providing custom handlers when an unhandled error occurs should re
 
 exports[`when providing custom handlers when the payload is invalid should list every error 1`] = `
 Object {
-  "body": "{\\"error\\":[{\\"context\\":[{\\"key\\":\\"\\",\\"type\\":{\\"name\\":\\"{ queryStringParameters: { pageNumber: number } }\\",\\"props\\":{\\"queryStringParameters\\":{\\"name\\":\\"{ pageNumber: number }\\",\\"props\\":{\\"pageNumber\\":{\\"name\\":\\"number\\",\\"_tag\\":\\"NumberType\\"}},\\"_tag\\":\\"InterfaceType\\"}},\\"_tag\\":\\"InterfaceType\\"},\\"actual\\":{\\"queryStringParameters\\":{\\"pageSize\\":\\"string\\"},\\"body\\":false}},{\\"key\\":\\"queryStringParameters\\",\\"type\\":{\\"name\\":\\"{ pageNumber: number }\\",\\"props\\":{\\"pageNumber\\":{\\"name\\":\\"number\\",\\"_tag\\":\\"NumberType\\"}},\\"_tag\\":\\"InterfaceType\\"},\\"actual\\":{\\"pageSize\\":\\"string\\"}},{\\"key\\":\\"pageNumber\\",\\"type\\":{\\"name\\":\\"number\\",\\"_tag\\":\\"NumberType\\"}}]}],\\"custom\\":true}",
+  "body": "{\\"error\\":[{\\"context\\":[{\\"key\\":\\"\\",\\"type\\":{\\"name\\":\\"{ queryStringParameters: { pageNumber: number } }\\",\\"props\\":{\\"queryStringParameters\\":{\\"name\\":\\"{ pageNumber: number }\\",\\"props\\":{\\"pageNumber\\":{\\"name\\":\\"number\\",\\"_tag\\":\\"NumberType\\"}},\\"_tag\\":\\"InterfaceType\\"}},\\"_tag\\":\\"InterfaceType\\"},\\"actual\\":{\\"headers\\":{},\\"multiValueHeaders\\":{},\\"pathParameters\\":{},\\"queryStringParameters\\":{\\"pageSize\\":\\"string\\"},\\"multiValueQueryStringParameters\\":{},\\"stageVariables\\":{},\\"body\\":false}},{\\"key\\":\\"queryStringParameters\\",\\"type\\":{\\"name\\":\\"{ pageNumber: number }\\",\\"props\\":{\\"pageNumber\\":{\\"name\\":\\"number\\",\\"_tag\\":\\"NumberType\\"}},\\"_tag\\":\\"InterfaceType\\"},\\"actual\\":{\\"pageSize\\":\\"string\\"}},{\\"key\\":\\"pageNumber\\",\\"type\\":{\\"name\\":\\"number\\",\\"_tag\\":\\"NumberType\\"}}]}],\\"custom\\":true}",
   "statusCode": 400,
 }
 `;
@@ -18,7 +18,7 @@ Object {
 
 exports[`when using default options when providing extra parameters not defined in the codec should  not strip the extra parameters 1`] = `
 Object {
-  "body": "{\\"queryStringParameters\\":{\\"pageNumber\\":4,\\"extraParameter\\":\\"hello\\"},\\"pathParameters\\":{\\"something\\":true}}",
+  "body": "{\\"headers\\":{},\\"multiValueHeaders\\":{},\\"pathParameters\\":{\\"something\\":true},\\"queryStringParameters\\":{\\"pageNumber\\":4,\\"extraParameter\\":\\"hello\\"},\\"multiValueQueryStringParameters\\":{},\\"stageVariables\\":{},\\"body\\":null}",
   "statusCode": 200,
 }
 `;
@@ -39,9 +39,16 @@ Object {
 }
 `;
 
+exports[`when using default options when the codec definition has optional parameters when the optional parameter is empty should succeed 1`] = `
+Object {
+  "body": "{\\"hello\\":\\"there\\",\\"params\\":{\\"pageNumber\\":4}}",
+  "statusCode": 200,
+}
+`;
+
 exports[`when using default options when the codec definition has optional parameters when the optional parameter is supplied should succeed 1`] = `
 Object {
-  "body": "{\\"hello\\":\\"there\\",\\"params\\":{\\"pageNumber\\":4,\\"pageSize\\":9}}",
+  "body": "{\\"hello\\":\\"there\\",\\"params\\":{\\"pageNumber\\":4,\\"pageSize\\":9,\\"someHeader\\":6}}",
   "statusCode": 200,
 }
 `;
