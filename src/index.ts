@@ -1,4 +1,5 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import { isLeft } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { jsonFromStringCodec } from "./codecs";
 import {
@@ -92,14 +93,14 @@ export const configureWrapper = (config: HandlerConfig | undefined) => <
     ...removeEmpty(event)
   }) as t.Validation<ValueMap<EventMap>>;
 
-  if (decoded.isLeft()) {
+  if (isLeft(decoded)) {
     // There was an error validating the event
     // This would probably be returned with a 400 status code
-    return validationErrorHandler(decoded.value);
+    return validationErrorHandler(decoded.left);
   }
 
   try {
-    const result = await handlerFn(decoded.value);
+    const result = await handlerFn(decoded.right);
 
     // Everything went OK and the handler function returned a value
     // This would probably be returned with a 200 status code

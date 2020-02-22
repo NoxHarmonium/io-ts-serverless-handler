@@ -4,6 +4,7 @@ import {
   defaultUnhandledErrorHandler,
   defaultValidationErrorHandler
 } from "../default-handlers";
+import { isLeft } from "fp-ts/lib/Either";
 
 // tslint:disable: no-duplicate-string
 
@@ -12,10 +13,10 @@ describe("defaultValidationErrorHandler", () => {
     const validationError = t.string.decode(4);
     it("should format the output correctly", () => {
       expect.assertions(2);
-      expect(validationError.isLeft()).toBe(true);
-      if (validationError.isLeft()) {
+      expect(isLeft(validationError)).toBe(true);
+      if (isLeft(validationError)) {
         expect(
-          defaultValidationErrorHandler(validationError.value)
+          defaultValidationErrorHandler(validationError.left)
         ).toMatchSnapshot();
       }
     });

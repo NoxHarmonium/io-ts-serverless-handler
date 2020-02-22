@@ -53,6 +53,5 @@ export const getUsers = codecHandler(
 ## Roadmap
 
 1. Better documentation
-2. Support io-ts/fp-ts 2.x
-3. CI/CD
-4. Support for serverless handlers for providers other than AWS
+2. CI/CD
+3. Support for serverless handlers for providers other than AWS

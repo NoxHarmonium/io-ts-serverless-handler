@@ -1402,10 +1402,10 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
-fp-ts@^1.0.0, fp-ts@^1.19.5:
-  version "1.19.5"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.19.5.tgz#3da865e585dfa1fdfd51785417357ac50afc520a"
-  integrity sha512-wDNqTimnzs8QqpldiId9OavWK2NptormjXnRJTQecNjzwfyp6P/8s/zG8e4h3ja3oqkKaY72UlTjQYt/1yXf9A==
+fp-ts@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.4.1.tgz#d20c785ff8179930922c7477c31f1ca44f763ae9"
+  integrity sha512-dPal5+rPN7k4ciZ2+O0+i75bbp17uTUoRkWWqJpkKed7wVcA5y/2jH4ZhunzUrJPuaG+mN9ZNf0pv5P7u/k7JQ==
 
 fragment-cache@^0.2.1:
   version "0.2.1"
@@ -1726,12 +1726,10 @@ invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
-io-ts@^1.10.4:
-  version "1.10.4"
-  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-1.10.4.tgz#cd5401b138de88e4f920adbcb7026e2d1967e6e2"
-  integrity sha512-b23PteSnYXSONJ6JQXRAlvJhuw8KOtkqa87W4wDtvMrud/DTJd5X+NpOOI+O/zZwVq6v0VLAaJ+1EDViKEuN9g==
-  dependencies:
-    fp-ts "^1.0.0"
+io-ts@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.0.5.tgz#e6e3db9df8b047f9cbd6b69e7d2ad3e6437a0b13"
+  integrity sha512-pL7uUptryanI5Glv+GUv7xh+aLBjxGEDmLwmEYNSx0yOD3djK0Nw5Bt0N6BAkv9LadOUU7QKpRsLcqnTh3UlLA==
 
 is-accessor-descriptor@^0.1.6:
   version "0.1.6"
