@@ -4,7 +4,7 @@ exports[`when providing custom handlers when an unhandled error occurs should re
 
 exports[`when providing custom handlers when the payload is invalid should list every error 1`] = `
 Object {
-  "body": "{\\"error\\":[{\\"context\\":[{\\"key\\":\\"\\",\\"type\\":{\\"name\\":\\"{ queryStringParameters: { pageNumber: number } }\\",\\"props\\":{\\"queryStringParameters\\":{\\"name\\":\\"{ pageNumber: number }\\",\\"props\\":{\\"pageNumber\\":{\\"name\\":\\"number\\",\\"_tag\\":\\"NumberType\\"}},\\"_tag\\":\\"InterfaceType\\"}},\\"_tag\\":\\"InterfaceType\\"},\\"actual\\":{\\"headers\\":{},\\"multiValueHeaders\\":{},\\"pathParameters\\":{},\\"queryStringParameters\\":{\\"pageSize\\":\\"string\\"},\\"multiValueQueryStringParameters\\":{},\\"stageVariables\\":{},\\"body\\":false}},{\\"key\\":\\"queryStringParameters\\",\\"type\\":{\\"name\\":\\"{ pageNumber: number }\\",\\"props\\":{\\"pageNumber\\":{\\"name\\":\\"number\\",\\"_tag\\":\\"NumberType\\"}},\\"_tag\\":\\"InterfaceType\\"},\\"actual\\":{\\"pageSize\\":\\"string\\"}},{\\"key\\":\\"pageNumber\\",\\"type\\":{\\"name\\":\\"number\\",\\"_tag\\":\\"NumberType\\"}}]}],\\"custom\\":true}",
+  "body": "{\\"error\\":[{\\"context\\":[{\\"key\\":\\"\\",\\"type\\":{\\"name\\":\\"{ queryStringParameters: { pageNumber: NumberFromString } }\\",\\"props\\":{\\"queryStringParameters\\":{\\"name\\":\\"{ pageNumber: NumberFromString }\\",\\"props\\":{\\"pageNumber\\":{\\"name\\":\\"NumberFromString\\"}},\\"_tag\\":\\"InterfaceType\\"}},\\"_tag\\":\\"InterfaceType\\"},\\"actual\\":{\\"headers\\":{},\\"multiValueHeaders\\":{},\\"pathParameters\\":{},\\"queryStringParameters\\":{\\"pageSize\\":\\"string\\"},\\"multiValueQueryStringParameters\\":{},\\"stageVariables\\":{},\\"body\\":false}},{\\"key\\":\\"queryStringParameters\\",\\"type\\":{\\"name\\":\\"{ pageNumber: NumberFromString }\\",\\"props\\":{\\"pageNumber\\":{\\"name\\":\\"NumberFromString\\"}},\\"_tag\\":\\"InterfaceType\\"},\\"actual\\":{\\"pageSize\\":\\"string\\"}},{\\"key\\":\\"pageNumber\\",\\"type\\":{\\"name\\":\\"NumberFromString\\"}}]}],\\"custom\\":true}",
   "statusCode": 400,
 }
 `;
@@ -18,7 +18,7 @@ Object {
 
 exports[`when using default options when providing extra parameters not defined in the codec should  not strip the extra parameters 1`] = `
 Object {
-  "body": "{\\"headers\\":{},\\"multiValueHeaders\\":{},\\"pathParameters\\":{\\"something\\":true},\\"queryStringParameters\\":{\\"pageNumber\\":4,\\"extraParameter\\":\\"hello\\"},\\"multiValueQueryStringParameters\\":{},\\"stageVariables\\":{},\\"body\\":null}",
+  "body": "{\\"headers\\":{},\\"multiValueHeaders\\":{},\\"pathParameters\\":{\\"something\\":\\"true\\"},\\"queryStringParameters\\":{\\"pageNumber\\":4,\\"extraParameter\\":\\"hello\\"},\\"multiValueQueryStringParameters\\":{},\\"stageVariables\\":{},\\"body\\":null}",
   "statusCode": 200,
 }
 `;
@@ -27,7 +27,7 @@ exports[`when using default options when the codec definition has a body when an
 
 exports[`when using default options when the codec definition has a body when the payload is invalid should list every error 1`] = `
 Object {
-  "body": "{\\"error\\":\\"Invalid value \\\\\\"string\\\\\\" supplied to : { queryStringParameters: { pageSize: number }, body: pipe(JSONFromString, { message: string }) }/queryStringParameters: { pageSize: number }/pageSize: number, Invalid value false supplied to : { queryStringParameters: { pageSize: number }, body: pipe(JSONFromString, { message: string }) }/body: pipe(JSONFromString, { message: string })\\"}",
+  "body": "{\\"error\\":\\"Invalid value \\\\\\"not-a-number\\\\\\" supplied to : { queryStringParameters: { pageSize: NumberFromString }, body: pipe(JSONFromString, { message: string }) }/queryStringParameters: { pageSize: NumberFromString }/pageSize: NumberFromString, Invalid value false supplied to : { queryStringParameters: { pageSize: NumberFromString }, body: pipe(JSONFromString, { message: string }) }/body: pipe(JSONFromString, { message: string })\\"}",
   "statusCode": 400,
 }
 `;

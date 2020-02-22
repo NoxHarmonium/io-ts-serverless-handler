@@ -30,15 +30,16 @@ Wrap your handler functions with the wrapper function:
 
 ```typescript
 import { codecHandler } from "./codec-handler.ts";
+import { NumberFromString } from "io-ts-types/lib/NumberFromString";
 
 export const getUsers = codecHandler(
   {
     queryParameters: t.partial({
-      pageSize: t.number,
-      pageNumber: t.number
+      pageSize: NumberFromString,
+      pageNumber: NumberFromString
     }),
     pathParameters: t.type({
-      userId: t.string
+      userId: NumberFromString
     })
   },
   async ({
@@ -51,6 +52,19 @@ export const getUsers = codecHandler(
   }
 );
 ```
+
+The request body will parsed as JSON and then passed to
+your codec.
+
+All the other parameters from API Gateway will come through
+as strings so if you want to decode a non-string type you will
+have to use a codec that accepts a string, converts it to the type
+you want and than validates that.
+
+There are a lot of types in the
+[io-ts-types](https://github.com/gcanti/io-ts-types)
+library that can do this for you such as `NumberFromString`
+or `BooleanFromString`.
 
 ## Roadmap
 
