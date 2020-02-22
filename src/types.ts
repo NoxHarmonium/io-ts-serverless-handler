@@ -68,25 +68,6 @@ export type SuccessHandler = <ResultType>(
 ) => APIGatewayProxyResult;
 
 /**
- * Represents a generic JSON object that is part of a JSONValue
- */
-export type JSONObject = { readonly [key: string]: JSONValue };
-/**
- * Represents a generic JSON array which is part of a JSONValue
- */
-export interface JSONArray extends Array<JSONValue> {}
-/**
- * Represents a generic JSON value that is parsed from a JSON string
- */
-export type JSONValue =
-  | null
-  | string
-  | number
-  | boolean
-  | JSONArray
-  | JSONObject;
-
-/**
  * Represents the set of config that is required to set up the handler wrapper
  */
 export type HandlerConfig = {

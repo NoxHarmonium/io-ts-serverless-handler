@@ -1,6 +1,6 @@
 import { either } from "fp-ts/lib/Either";
 import * as t from "io-ts";
-import { JSONValue } from "./types";
+import { JsonValue } from "type-fest";
 
 /**
  * A codec that takes a JSON string and does two things:
@@ -8,9 +8,9 @@ import { JSONValue } from "./types";
  *   2. Validates that the string represents a valid JSON object
  * Useful to parse a JSON object that can then be passed into a higher order codec
  */
-export const jsonFromStringCodec = new t.Type<JSONValue, string, unknown>(
+export const jsonFromStringCodec = new t.Type<JsonValue, string, unknown>(
   "JSONFromString",
-  (u): u is JSONValue => u !== undefined,
+  (u): u is JsonValue => u !== undefined,
   (u, c) =>
     either.chain(t.string.validate(u, c), s => {
       try {

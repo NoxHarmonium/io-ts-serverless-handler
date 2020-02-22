@@ -15,6 +15,8 @@ import {
 } from "./types";
 import { removeEmpty } from "./utils";
 
+export * from "./types";
+
 const defaultConfig: Required<HandlerConfig> = {
   validationErrorHandler: defaultValidationErrorHandler,
   unhandledErrorHandler: defaultUnhandledErrorHandler,
@@ -108,5 +110,3 @@ export const configureWrapper = (config: HandlerConfig | undefined) => <
     return unhandledErrorHandler(e);
   }
 };
-
-export * from "./types";
