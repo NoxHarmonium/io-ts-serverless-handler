@@ -66,6 +66,12 @@ There are a lot of types in the
 library that can do this for you such as `NumberFromString`
 or `BooleanFromString`.
 
+## Example Project
+
+There is an example Serverless project that demonstrates this library at:
+
+https://github.com/NoxHarmonium/io-ts-serverless-handler-example
+
 ## Roadmap
 
 1. Better documentation
