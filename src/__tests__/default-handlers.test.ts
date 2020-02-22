@@ -1,10 +1,10 @@
+import { isLeft } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import {
   defaultSuccessHandler,
   defaultUnhandledErrorHandler,
   defaultValidationErrorHandler
 } from "../default-handlers";
-import { isLeft } from "fp-ts/lib/Either";
 
 // tslint:disable: no-duplicate-string
 

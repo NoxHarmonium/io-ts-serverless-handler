@@ -23,7 +23,8 @@
     "format-check": "prettier-check src/**/*",
     "type-coverage": "type-coverage --strict --detail --ignore-catch",
     "format": "prettier --write '{src,test}/**/*.{ts,tsx}'",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "quality-check": "yon test && yon lint && yon format-check && yon type-coverage"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.39",
@@ -31,6 +32,7 @@
     "commitizen": "^4.0.3",
     "cz-conventional-changelog": "3.0.2",
     "fp-ts": "^2.4.1",
+    "husky": "^4.2.3",
     "io-ts": "^2.0.5",
     "jest": "^24.9.0",
     "jest-each": "^24.9.0",
@@ -43,7 +45,8 @@
     "tslint-immutable": "^6.0.1",
     "tslint-sonarts": "^1.9.0",
     "type-coverage": "^2.4.0",
-    "typescript": "^3.7.4"
+    "typescript": "^3.7.4",
+    "yarn-or-npm": "^3.0.1"
   },
   "config": {
     "commitizen": {
@@ -52,5 +55,10 @@
   },
   "dependencies": {
     "type-fest": "^0.11.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yon quality-check"
+    }
   }
 }
