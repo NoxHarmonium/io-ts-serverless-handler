@@ -27,6 +27,8 @@
     "quality-check": "yon test && yon lint && yon format-check && yon type-coverage"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
     "@types/aws-lambda": "^8.10.39",
     "@types/jest": "^24.0.25",
     "commitizen": "^4.0.3",
@@ -58,7 +60,11 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yon quality-check"
+      "pre-commit": "yon quality-check",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "typeCoverage": {
+    "atLeast": 100
   }
 }

@@ -13,7 +13,7 @@ describe("jsonFromStringCodec", () => {
       [""],
       ["dfsjlsf"],
       ['{ "hello": 4 ']
-    ]).test("fails when decoding [%p]", input => {
+    ]).test("fails when decoding [%p]", (input: unknown) => {
       expect.assertions(2);
       const result = jsonFromStringCodec.decode(input);
       expect(isLeft(result)).toBe(true);
@@ -25,7 +25,7 @@ describe("jsonFromStringCodec", () => {
   describe("when decoding a valid input", () => {
     each([["null"], ["8"], ["false"], ['{ "hello": 4 }']]).test(
       "succeeds when decoding [%p]",
-      input => {
+      (input: unknown) => {
         expect.assertions(2);
 
         const result = jsonFromStringCodec.decode(input);

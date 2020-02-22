@@ -1,5 +1,7 @@
 # io-ts-serverless-handler
 
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+
 A simple wrapper for [Serverless Framework](https://github.com/serverless/serverless) HTTP handlers
 to remove the boilerplate of using [io-ts](https://github.com/gcanti/io-ts) codecs to validate and extract request parameters.
 
