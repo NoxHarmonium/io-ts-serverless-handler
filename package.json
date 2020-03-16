@@ -28,6 +28,8 @@
     "semantic-release": "semantic-release"
   },
   "devDependencies": {
+    "@codechecks/build-size-watcher": "^0.1.0",
+    "@codechecks/client": "^0.1.10",
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
     "@jedmao/semantic-release-npm-github-config": "^1.0.9",
@@ -53,6 +55,7 @@
     "tslint-immutable": "^6.0.1",
     "tslint-sonarts": "^1.9.0",
     "type-coverage": "^2.4.0",
+    "typecov": "^0.2.1",
     "typescript": "^3.7.4",
     "yarn-or-npm": "^3.0.1"
   },

@@ -17,6 +17,7 @@ jobs:
       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      CC_SECRET: ${{ secrets.CC_SECRET }}
 
     strategy:
       matrix:
@@ -37,4 +38,5 @@ jobs:
           CI: true
       - run: yarn commitlint --from `git show-ref -s "${GITHUB_REF}"` --to `git show-ref -s "${GITHUB_HEAD_REF}"` --verbose
         if: github.event_name == 'pull_request'
+      - run: yarn codechecks
       - run: yarn semantic-release
