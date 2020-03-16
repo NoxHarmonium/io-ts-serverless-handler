@@ -43,3 +43,4 @@ jobs:
         if: github.event_name != 'pull_request'
       - run: bash <(curl -s https://codecov.io/bash)
       - run: yarn semantic-release
+        if: matrix.node-version == '12.x'
