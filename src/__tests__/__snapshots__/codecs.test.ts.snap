@@ -1,5 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`jsonFromStringCodec when an error that does not inherit from the Error object is thrown should propagate it and not crash 1`] = `
+Array [
+  Object {
+    "context": Array [
+      Object {
+        "actual": "*DFHDF7890",
+        "key": "",
+        "type": Type {
+          "decode": [Function],
+          "encode": [Function],
+          "is": [Function],
+          "name": "JSONFromString",
+          "validate": [Function],
+        },
+      },
+    ],
+    "message": "Unknown error",
+    "value": "*DFHDF7890",
+  },
+]
+`;
+
 exports[`jsonFromStringCodec when decoding a invalid input fails when decoding [""] 1`] = `
 Array [
   Object {
@@ -187,3 +209,11 @@ exports[`jsonFromStringCodec when decoding a valid input succeeds when decoding 
 exports[`jsonFromStringCodec when decoding a valid input succeeds when decoding ["false"] 1`] = `false`;
 
 exports[`jsonFromStringCodec when decoding a valid input succeeds when decoding ["null"] 1`] = `null`;
+
+exports[`jsonFromStringCodec when encoding a JsonValue succeeds when encoding [{"hello": 4}] 1`] = `"{\\"hello\\":4}"`;
+
+exports[`jsonFromStringCodec when encoding a JsonValue succeeds when encoding [8] 1`] = `"8"`;
+
+exports[`jsonFromStringCodec when encoding a JsonValue succeeds when encoding [false] 1`] = `"false"`;
+
+exports[`jsonFromStringCodec when encoding a JsonValue succeeds when encoding [null] 1`] = `"null"`;

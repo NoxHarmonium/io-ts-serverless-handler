@@ -1,6 +1,7 @@
 import { either } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { JsonValue } from "type-fest";
+import { jsonParser } from "./parsers";
 
 /**
  * A codec that takes a JSON string and does two things:
@@ -14,7 +15,7 @@ export const jsonFromStringCodec = new t.Type<JsonValue, string, unknown>(
   (u, c) =>
     either.chain(t.string.validate(u, c), s => {
       try {
-        return t.success(JSON.parse(s));
+        return t.success(jsonParser.parse(s));
       } catch (e) {
         if (e instanceof Error) {
           return t.failure(u, c, e.message);
