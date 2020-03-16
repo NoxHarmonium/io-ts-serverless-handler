@@ -3,6 +3,7 @@ checks:
     options:
       gzip: true
       files:
-        - path: "./dist/**/*"
+        - path: "./lib/**/*"
+        - path: "./es6/**/*"
   - name: typecov
     options:

@@ -2,8 +2,10 @@
   "name": "io-ts-serverless-handler",
   "version": "2.0.0",
   "description": "A simple wrapper for Serverless Framework HTTP handlers to remove the boilerplate of using io-ts codecs to validate and extract request parameters",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "lib/index.js",
+  "module": "es6/index.js",
+  "typings": "lib/index.d.ts",
+  "sideEffects": false,
   "author": "Sean Dawson <contact@seandawson.info>",
   "repository": {
     "type": "git",
@@ -15,8 +17,7 @@
     "io-ts": "^1.10.4"
   },
   "scripts": {
-    "prepare": "tsc",
-    "build": "tsc",
+    "build": "tsc && tsc -p tsconfig.es6.json",
     "test": "jest --coverage",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "lint-fix": "tslint --fix -p tsconfig.json -c tslint.json",
@@ -25,7 +26,8 @@
     "format": "prettier --write '{src,test}/**/*.{ts,tsx}'",
     "commit": "git-cz",
     "quality-check": "yon test && yon lint && yon format-check && yon type-coverage",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "prepare": "yon build"
   },
   "devDependencies": {
     "@codechecks/build-size-watcher": "^0.1.0",
@@ -78,5 +80,9 @@
   },
   "typeCoverage": {
     "atLeast": 100
-  }
+  },
+  "files": [
+    "/es6",
+    "/lib"
+  ]
 }
