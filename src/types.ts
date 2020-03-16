@@ -2,11 +2,6 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import * as t from "io-ts";
 
 /**
- * Utility function that will filter out T if it doesn't extend from U
- */
-type Filter<T, U> = T extends U ? T : never;
-
-/**
  * The parts of APIGatewayProxyEvent that we want to validate
  */
 export type ExtractableParameters = Pick<
@@ -22,12 +17,17 @@ export type ExtractableParameters = Pick<
 >;
 
 /**
+ * The most general case of codec that can be assigned to an event map
+ */
+export type BaseCodecType = t.HasProps;
+
+/**
  * Defines how to validate the properties in a handler event
  */
 export type EventMapBase = Partial<
   {
     readonly // tslint:disable-next-line: no-any
-    [p in keyof ExtractableParameters]: t.TypeC<any> | t.PartialC<any>;
+    [p in keyof ExtractableParameters]: BaseCodecType;
   }
 >;
 
@@ -36,7 +36,10 @@ export type EventMapBase = Partial<
  * the type that io-ts will decode it to
  */
 export type ValueMap<EventMap extends EventMapBase> = {
-  readonly [p in keyof EventMap]: t.TypeOf<Filter<EventMap[p], t.Any>>;
+  readonly [p in keyof EventMap]: t.TypeOf<
+    // tslint:disable-next-line: no-any
+    Extract<EventMap[p], BaseCodecType>
+  >;
 };
 
 /**
@@ -75,4 +78,11 @@ export type HandlerConfig = {
   readonly unhandledErrorHandler?: UnhandledErrorHandler;
   readonly successHandler?: SuccessHandler;
   readonly strict?: boolean;
+};
+
+/**
+ * A parser function takes a string, and parses it to an object.
+ */
+export type Parser<O = unknown> = {
+  readonly parse: (input: string) => O;
 };

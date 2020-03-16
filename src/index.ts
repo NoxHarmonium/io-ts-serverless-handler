@@ -8,13 +8,14 @@ import {
   defaultValidationErrorHandler
 } from "./default-handlers";
 import {
+  BaseCodecType,
   EventMapBase,
   ExtractableParameters,
   HandlerConfig,
   HandlerFunction,
   ValueMap
 } from "./types";
-import { removeEmpty } from "./utils";
+import { removeEmpty, typedKeys } from "./utils";
 
 export * from "./types";
 
@@ -56,34 +57,30 @@ export const configureWrapper = (config: HandlerConfig | undefined) => <
     ...config
   };
 
-  const keys = Object.keys(codecMaps) as ReadonlyArray<keyof EventMap>;
-
+  const keys = typedKeys<EventMapBase>(codecMaps);
   // Filter out any keys that are not provided and merge all the codecs into
   // a root codec definition that can decode the lambda event
-  const mergedParameterCodecs = keys
-    .filter(key => key !== "body" && codecMaps[key] !== undefined)
-    .reduce((prev, key) => {
-      // TODO: Work out why this needs to be force casted
-      // tslint:disable: no-any
-      const subMap = (codecMaps[key] as unknown) as
-        | t.TypeC<any>
-        | t.PartialC<any>;
-      // tslint:enable: no-any
+  const mergedParameterCodecs = keys.reduce((prev, key) => {
+    const subMap = codecMaps[key];
+    return key === "body" || subMap === undefined
+      ? prev
+      : { ...prev, [key]: strict ? t.exact(subMap) : subMap };
+  }, {} as ValueMap<EventMap>);
 
-      return subMap === undefined
-        ? prev
-        : { ...prev, [key]: strict ? t.exact(subMap) : subMap };
-    }, {});
+  const decodeBody = (body: BaseCodecType): Partial<ValueMap<EventMap>> => ({
+    // type-coverage:ignore-next-line - io-ts types use any
+    body: jsonFromStringCodec.pipe(body)
+  });
 
   const mergedCodecs =
     codecMaps.body === undefined
-      ? (mergedParameterCodecs as ValueMap<EventMap>)
-      : ({
+      ? mergedParameterCodecs
+      : {
           ...mergedParameterCodecs,
           // The body must first be a valid string, then valid JSON then parsed
           // and validated against the codec that is provided in the codec map
-          body: jsonFromStringCodec.pipe(codecMaps.body)
-        } as ValueMap<EventMap>);
+          ...decodeBody(codecMaps.body)
+        };
 
   // Turn the root codec definition into an actual codec
   const rootCodec = strict ? t.strict(mergedCodecs) : t.type(mergedCodecs);
