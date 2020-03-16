@@ -40,5 +40,6 @@ jobs:
       - run: yarn commitlint --from `git show-ref -s "${GITHUB_REF}"` --to `git show-ref -s "${GITHUB_HEAD_REF}"` --verbose
         if: github.event_name == 'pull_request'
       - run: yarn codechecks
+        if: github.event_name != 'pull_request'
       - run: bash <(curl -s https://codecov.io/bash)
       - run: yarn semantic-release
