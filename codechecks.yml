@@ -1,6 +1,7 @@
 checks:
   - name: build-size-watcher
     options:
+      name: io-ts-serverless-handler
       gzip: true
       files:
         - path: "./lib/**/*.js"
@@ -9,3 +10,6 @@ checks:
         - path: "./es6/**/.js"
   - name: typecov
     options:
+      atLeast: 99
+      name: io-ts-serverless-handler
+      tsconfigPath: ./tsconfig.json
