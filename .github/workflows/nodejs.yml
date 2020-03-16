@@ -18,6 +18,7 @@ jobs:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
       CC_SECRET: ${{ secrets.CC_SECRET }}
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
     strategy:
       matrix:
@@ -39,4 +40,5 @@ jobs:
       - run: yarn commitlint --from `git show-ref -s "${GITHUB_REF}"` --to `git show-ref -s "${GITHUB_HEAD_REF}"` --verbose
         if: github.event_name == 'pull_request'
       - run: yarn codechecks
+      - run: bash <(curl -s https://codecov.io/bash)
       - run: yarn semantic-release

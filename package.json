@@ -17,7 +17,7 @@
   "scripts": {
     "prepare": "tsc",
     "build": "tsc",
-    "test": "jest",
+    "test": "jest --coverage",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "lint-fix": "tslint --fix -p tsconfig.json -c tslint.json",
     "format-check": "prettier-check src/**/*",
@@ -58,6 +58,9 @@
     "typecov": "^0.2.1",
     "typescript": "^3.7.4",
     "yarn-or-npm": "^3.0.1"
+  },
+  "resolutions": {
+    "handlebars": "4.5.0"
   },
   "config": {
     "commitizen": {
