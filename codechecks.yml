@@ -3,7 +3,9 @@ checks:
     options:
       gzip: true
       files:
-        - path: "./lib/**/*"
-        - path: "./es6/**/*"
+        - path: "./lib/**/*.js"
+        - path: "./lib/**/*.ts"
+        - path: "./es6/**/.ts"
+        - path: "./es6/**/.js"
   - name: typecov
     options:
