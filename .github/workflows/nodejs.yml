@@ -39,8 +39,12 @@ jobs:
       - run: yarn quality-check
         env:
           CI: true
-      - run: yarn commitlint --from $(git show-ref -s "${GITHUB_REF}") --to $(git show-ref -s "${GITHUB_HEAD_REF}") --verbose
-        if: github.event_name == 'pull_request'
+      - run: |
+          git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
+          export FROM=$(git rev-parse origin/master)
+          echo "Checking from commit [$FROM] to [$GITHUB_SHA]..."
+          yarn commitlint --from "${FROM}" --to "${GITHUB_SHA}" --verbose
+        if: github.event_name != 'pull_request'
       - run: yarn codechecks
         if: github.event_name != 'pull_request'
       - run: bash <(curl -s https://codecov.io/bash)
