@@ -1,0 +1,38 @@
+service:
+  name: itshe
+
+package:
+  # Workaround for yarn workspaces symlinking
+  # Without these, all the dev dependencies of io-ts-serverless-handler get included in the package
+  exclude:
+    - node_modules/io-ts-serverless-handler/**
+    - "!node_modules/io-ts-serverless-handler/lib/**"
+    - "!node_modules/io-ts-serverless-handler/es6/**"
+    - "!node_modules/io-ts-serverless-handler/package.json"
+
+# Add the serverless-webpack plugin
+plugins:
+  - "@kingdarboja/serverless-plugin-typescript"
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  apiGateway:
+    minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+
+functions:
+  listProducts:
+    handler: src/handler.listProducts
+    events:
+      - http:
+          method: get
+          path: products
+  getProduct:
+    handler: src/handler.getProduct
+    events:
+      - http:
+          method: get
+          path: products/{id}

@@ -1,0 +1,28 @@
+{
+  "name": "io-ts-serverless-handler-example",
+  "version": "1.0.0",
+  "description": "A project to demonstrate how io-ts-serverless-handler works",
+  "main": "handler.js",
+  "scripts": {
+    "start": "sls offline",
+    "build": "sls package",
+    "quality-check": "echo 'quality-check script not configured for this package yet'",
+    "test": "echo 'test script not configured for this package yet'",
+    "integration-test": "bash scripts/integration-test.sh"
+  },
+  "dependencies": {
+    "faker": "^4.1.0",
+    "fp-ts": "^2.5.3",
+    "io-ts": "^2.1.2",
+    "io-ts-serverless-handler": "^2.0.0",
+    "io-ts-types": "^0.5.6",
+    "lodash": "^4.17.15",
+    "monocle-ts": "^2.1.0",
+    "newtype-ts": "^0.3.4"
+  },
+  "author": "Sean Dawson <contact@seandawson.info>",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/lodash": "^4.14.149"
+  }
+}
