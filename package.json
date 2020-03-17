@@ -10,10 +10,11 @@
     ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
     "commitizen": "^4.0.3",
     "cz-conventional-changelog": "3.0.2",
-    "@commitlint/cli": "^8.3.5",
-    "@commitlint/config-conventional": "^8.3.4"
+    "husky": "^4.2.3"
   },
   "scripts": {
     "commit": "git-cz"
@@ -21,6 +22,12 @@
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn workspaces run quality-check",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   }
 }

@@ -35,7 +35,6 @@
     "@types/aws-lambda": "^8.10.39",
     "@types/jest": "^24.0.25",
     "fp-ts": "^2.4.1",
-    "husky": "^4.2.3",
     "io-ts": "^2.0.5",
     "io-ts-types": "^0.5.6",
     "jest": "^25.1.0",
@@ -61,12 +60,6 @@
   },
   "dependencies": {
     "type-fest": "^0.11.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yon quality-check",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
   },
   "typeCoverage": {
     "atLeast": 100
