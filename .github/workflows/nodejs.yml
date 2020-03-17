@@ -60,3 +60,13 @@ jobs:
         run: yarn semantic-release
         working-directory: ./packages/io-ts-serverless-handler
         if: matrix.node-version == '12.x'
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Run Integration Test
+        run: yarn integration-test
+        working-directory: ./packages/io-ts-serverless-handler-example
+        if: matrix.node-version == '12.x'
