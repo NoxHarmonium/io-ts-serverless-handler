@@ -14,7 +14,7 @@ fi
 
 # Thanks: https://stackoverflow.com/a/246128/1153203
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-STAGE=$(git branch --show-current)-$(git rev-parse --short HEAD)-"${GITHUB_RUN_ID:-"0"}"
+STAGE=$(git rev-parse --short HEAD)-"${GITHUB_RUN_ID:-"0"}"
 
 echo "Checking AWS CLI config..."
 
@@ -26,7 +26,7 @@ aws sts get-caller-identity > /dev/null || {
 
 cleanup() {
   echo 'Cleaning up!'
-  # yarn sls remove -s "$STAGE" --verbose
+  yarn sls remove -s "$STAGE" --verbose
 }
 
 pushd "$CURRENT_DIR/.."
