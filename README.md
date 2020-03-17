@@ -74,9 +74,15 @@ or `BooleanFromString`.
 
 ## Example Project
 
-There is an example Serverless project that demonstrates this library at:
+There is a sample Serverless project provided in this repo in the `example` directory.
 
-https://github.com/NoxHarmonium/io-ts-serverless-handler-example
+You can try it out yourself:
+
+```bash
+cd example
+yarn install
+yarn sls deploy -s my-stage --verbose
+```
 
 ## Roadmap
 

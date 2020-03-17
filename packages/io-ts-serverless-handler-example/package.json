@@ -1,0 +1,41 @@
+{
+  "name": "io-ts-serverless-handler-example",
+  "version": "1.0.0",
+  "description": "A project to demonstrate how io-ts-serverless-handler works",
+  "main": "handler.js",
+  "scripts": {
+    "start": "sls offline",
+    "build": "sls package",
+    "quality-check": "echo 'quality-check script not configured for this package yet'",
+    "test": "echo 'test script not configured for this package yet'",
+    "integration-test": "bash scripts/integration-test.sh"
+  },
+  "dependencies": {
+    "faker": "^4.1.0",
+    "fp-ts": "^2.5.3",
+    "io-ts": "^2.1.2",
+    "io-ts-serverless-handler": "^2.0.0",
+    "io-ts-types": "^0.5.6",
+    "lodash": "^4.17.15",
+    "monocle-ts": "^2.1.0",
+    "newtype-ts": "^0.3.4",
+    "source-map-support": "^0.5.10"
+  },
+  "devDependencies": {
+    "@kingdarboja/serverless-plugin-typescript": "^1.2.0",
+    "@types/aws-lambda": "^8.10.17",
+    "@types/faker": "^4.1.9",
+    "@types/node": "^10.12.18",
+    "eslint": "^6.8.0",
+    "fork-ts-checker-webpack-plugin": "^3.0.1",
+    "serverless": "^1.60.5",
+    "serverless-offline": "^5.12.1",
+    "serverless-webpack": "^5.2.0",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.8.3",
+    "webpack": "^4.29.0",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "author": "Sean Dawson <contact@seandawson.info>",
+  "license": "Apache-2.0"
+}

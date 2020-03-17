@@ -10,6 +10,6 @@ checks:
         - path: "./es6/**/.js"
   - name: typecov
     options:
-      atLeast: 99
+      atLeast: 100
       name: io-ts-serverless-handler
       tsconfigPath: ./tsconfig.json
