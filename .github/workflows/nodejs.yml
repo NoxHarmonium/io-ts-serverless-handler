@@ -12,6 +12,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Don't build if Semantic Release pushes a ci skip commit
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
 
     env:
       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -61,5 +61,8 @@
       "pre-commit": "yarn workspaces run quality-check",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "typeCoverage": {
+    "atLeast": 100
   }
 }

@@ -1,7 +1,7 @@
 checks:
   - name: build-size-watcher
     options:
-      name: io-ts-serverless-handler
+      name: Build Size
       gzip: true
       files:
         - path: "./lib/**/*.js"
@@ -11,7 +11,7 @@ checks:
   - name: typecov
     options:
       atLeast: 100
-      name: io-ts-serverless-handler
+      name: Type Coverage
       tsconfigPath: ./tsconfig.json
       strict: true
       ignoreCatch: true
