@@ -3,7 +3,7 @@
 ![npm](https://img.shields.io/npm/v/io-ts-serverless-handler)
 ![Node.js CI](https://github.com/NoxHarmonium/io-ts-serverless-handler/workflows/Node.js%20CI/badge.svg)
 [![codecov](https://codecov.io/gh/NoxHarmonium/io-ts-serverless-handler/branch/master/graph/badge.svg)](https://codecov.io/gh/NoxHarmonium/io-ts-serverless-handler)
-[![type-coverage](https://img.shields.io/badge/dynamic/json.svg?label=type-coverage&prefix=%E2%89%A5&suffix=%&query=$.typeCoverage.atLeast&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fplantain-00%2Ftype-coverage%2Fmaster%2Fpackage.json)](https://github.com/plantain-00/type-coverage)
+[![type-coverage](https://img.shields.io/badge/dynamic/json.svg?label=type-coverage&prefix=%E2%89%A5&suffix=%&query=$.typeCoverage.atLeast&uri=https%3A%2F%2Fraw.githubusercontent.com%2FNoxHarmonium%2Fio-ts-serverless-handler%2Fmaster%2Fpackage.json)](https://github.com/plantain-00/type-coverage)
 ![licence](https://img.shields.io/npm/l/io-ts-serverless-handler)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
