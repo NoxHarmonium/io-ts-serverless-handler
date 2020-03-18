@@ -26,7 +26,8 @@
     "format": "prettier --write '{src,test}/**/*.{ts,tsx}'",
     "quality-check": "yon test && yon lint && yon format-check && yon type-coverage",
     "semantic-release": "semantic-release",
-    "prepare": "yon build"
+    "prepare": "yon build",
+    "postinstall": "patch-package"
   },
   "devDependencies": {
     "@codechecks/build-size-watcher": "^0.1.0",
@@ -41,6 +42,7 @@
     "jest-each": "^25.1.0",
     "monocle-ts": "^2.1.0",
     "newtype-ts": "^0.3.4",
+    "patch-package": "^6.2.1",
     "prettier": "^1.19.1",
     "prettier-check": "^2.0.0",
     "semantic-release": "^17.0.4",

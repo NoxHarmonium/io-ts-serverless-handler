@@ -13,3 +13,5 @@ checks:
       atLeast: 100
       name: io-ts-serverless-handler
       tsconfigPath: ./tsconfig.json
+      strict: true
+      ignoreCatch: true
