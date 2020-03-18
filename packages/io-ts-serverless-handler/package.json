@@ -1,0 +1,44 @@
+{
+  "name": "io-ts-serverless-handler",
+  "version": "2.0.0",
+  "description": "A simple wrapper for Serverless Framework HTTP handlers to remove the boilerplate of using io-ts codecs to validate and extract request parameters",
+  "main": "lib/index.js",
+  "module": "es6/index.js",
+  "typings": "lib/index.d.ts",
+  "sideEffects": false,
+  "author": "Sean Dawson <contact@seandawson.info>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NoxHarmonium/io-ts-serverless-handler"
+  },
+  "license": "Apache-2.0",
+  "peerDependencies": {
+    "fp-ts": "^2.4.1",
+    "io-ts": "^2.0.5"
+  },
+  "scripts": {
+    "build": "tsc && tsc -p tsconfig.es6.json",
+    "test": "jest --coverage",
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "lint-fix": "tslint --fix -p tsconfig.json -c tslint.json",
+    "format-check": "prettier-check src/**/*",
+    "type-coverage": "type-coverage --strict --detail --ignore-catch",
+    "format": "prettier --write '{src,test}/**/*.{ts,tsx}'",
+    "quality-check": "yon test && yon lint && yon format-check && yon type-coverage",
+    "semantic-release": "semantic-release",
+    "prepare": "yon build"
+  },
+  "resolutions": {
+    "handlebars": "4.5.0"
+  },
+  "dependencies": {
+    "type-fest": "^0.11.0"
+  },
+  "typeCoverage": {
+    "atLeast": 100
+  },
+  "files": [
+    "/es6",
+    "/lib"
+  ]
+}

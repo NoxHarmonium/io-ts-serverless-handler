@@ -1,6 +1,6 @@
 
-# Created by https://www.gitignore.io/api/node
-# Edit at https://www.gitignore.io/?templates=node
+# Created by https://www.gitignore.io/api/node,serverless
+# Edit at https://www.gitignore.io/?templates=node,serverless
 
 ### Node ###
 # Logs
@@ -71,9 +71,6 @@ typings/
 .env
 .env.test
 
-# direnv files
-.envrc
-
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 
@@ -83,9 +80,8 @@ typings/
 # nuxt.js build output
 .nuxt
 
-# build output
-lib/
-es6/
+# rollup.js default build output
+dist/
 
 # Uncomment the public line if your project uses Gatsby
 # https://nextjs.org/blog/next-9-1#public-directory-support
@@ -112,7 +108,9 @@ es6/
 tmp/
 temp/
 
-# End of https://www.gitignore.io/api/node
+### Serverless ###
+# Ignore build directory
+.serverless
+.webpack
 
-# IDE State
-.vscode
+# End of https://www.gitignore.io/api/node,serverless
