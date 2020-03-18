@@ -35,7 +35,7 @@ jobs:
       # Skip post-install scripts here, as a malicious
       # script could steal NODE_AUTH_TOKEN.
       - name: Install dependencies
-        run: yarn install --ignore-scripts
+        run: yarn install
       - name: Build packages
         run: yarn workspaces run build
       - name: Check for code quality in packages
