@@ -22,7 +22,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x]
+        node-version: [12.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -59,7 +59,6 @@ jobs:
       - name: Run Semantic Release
         run: yarn semantic-release
         working-directory: ./packages/io-ts-serverless-handler
-        if: matrix.node-version == '12.x'
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -69,4 +68,3 @@ jobs:
       - name: Run Integration Test
         run: yarn integration-test
         working-directory: ./packages/io-ts-serverless-handler-example
-        if: matrix.node-version == '12.x'
