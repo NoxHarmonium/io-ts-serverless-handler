@@ -5,7 +5,7 @@ name: Node.js CI
 
 on:
   push:
-    branches: ["*"]
+    branches: ["**"]
   pull_request:
     branches: [master]
 
@@ -54,6 +54,7 @@ jobs:
       - name: Run Codechecks
         run: yarn codechecks
         working-directory: ./packages/io-ts-serverless-handler
+        if: github.event_name != 'pull_request'
       - name: Analyse Coverage
         run: bash <(curl -s https://codecov.io/bash)
         working-directory: ./packages/io-ts-serverless-handler
