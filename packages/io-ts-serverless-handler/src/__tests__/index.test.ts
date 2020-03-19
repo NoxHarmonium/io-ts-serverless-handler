@@ -1,10 +1,12 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
 import * as t from "io-ts";
 import { NumberFromString } from "io-ts-types/lib/NumberFromString";
+import { BooleanFromString } from "io-ts-types/lib/BooleanFromString";
+import { DateFromISOString } from "io-ts-types/lib/DateFromISOString";
 import { configureWrapper, HandlerFunction } from "..";
+import { jsonFromStringCodec } from "../codecs";
 
-// tslint:disable: no-duplicate-string no-identical-functions
-
+// tslint:disable: no-duplicate-string no-identical-functions no-big-function
 describe("when using default options", () => {
   const codecHandler = configureWrapper({});
   describe("when the codec definition has a body", () => {
@@ -191,6 +193,143 @@ describe("when using default options", () => {
       expect(result).toMatchSnapshot();
     });
   });
+  describe("when exhaustively specifying all possible properties", () => {
+    // Extreemly contrived schema to try and expose corner cases
+    const mockSchema = {
+      headers: t.intersection([
+        t.type({
+          requiredHeader: NumberFromString
+        }),
+        t.partial({
+          optionalHeader: t.union([BooleanFromString, t.null])
+        })
+      ]),
+      multiValueHeaders: t.intersection([
+        t.type({ requiredMVH: t.array(DateFromISOString) }),
+        t.partial({
+          optionalMVH: t.union([t.array(t.union([t.string, t.null])), t.null])
+        })
+      ]),
+      pathParameters: t.intersection([
+        t.type({
+          requiredPathParamA: t.string,
+          requiredPathParamB: DateFromISOString
+        }),
+        t.partial({
+          optionalPathParam: NumberFromString
+        })
+      ]),
+      queryStringParameters: t.intersection([
+        t.type({
+          requiredQueryStringA: t.string,
+          requiredQueryStringB: jsonFromStringCodec.pipe(t.array(t.number))
+        }),
+        t.partial({
+          optionalQueryString: t.union([t.string, t.null])
+        })
+      ]),
+      multiValueQueryStringParameters: t.intersection([
+        t.type({
+          requiredMVQueryString: t.array(BooleanFromString)
+        }),
+        t.partial({
+          optionalMVQueryString: t.union([t.array(jsonFromStringCodec), t.null])
+        })
+      ]),
+      stageVariables: t.intersection([
+        t.type({
+          requiredStageVariable: t.string
+        }),
+        t.partial({
+          optionalStageVariable: t.union([jsonFromStringCodec, t.null])
+        })
+      ]),
+      body: t.type({
+        some: t.string
+      })
+    };
+    const mockHandler = codecHandler(
+      mockSchema,
+      async ({
+        headers: { requiredHeader, optionalHeader },
+        multiValueHeaders: { requiredMVH, optionalMVH },
+        pathParameters: {
+          requiredPathParamA,
+          requiredPathParamB,
+          optionalPathParam
+        },
+        queryStringParameters: {
+          requiredQueryStringA,
+          requiredQueryStringB,
+          optionalQueryString
+        },
+        multiValueQueryStringParameters: {
+          requiredMVQueryString,
+          optionalMVQueryString
+        },
+        stageVariables: { requiredStageVariable, optionalStageVariable },
+        body
+      }) => ({
+        requiredHeader,
+        optionalHeader,
+        requiredMVH,
+        optionalMVH,
+        requiredPathParamA,
+        requiredPathParamB,
+        optionalPathParam,
+        requiredQueryStringA,
+        requiredQueryStringB,
+        optionalQueryString,
+        requiredMVQueryString,
+        optionalMVQueryString,
+        requiredStageVariable,
+        optionalStageVariable,
+        body
+      })
+    );
+
+    it("should be able to parse a full payload correctly", async () => {
+      const mockEvent = ({
+        headers: {
+          requiredHeader: "123",
+          optionalHeader: "false"
+        },
+        multiValueHeaders: {
+          requiredMVH: [
+            new Date(0).toISOString(),
+            new Date(100000).toUTCString()
+          ],
+          optionalMVH: ["abc", null, "def", null, null]
+        },
+        pathParameters: {
+          requiredPathParamA: "string",
+          requiredPathParamB: new Date(999999).toISOString(),
+          optionalPathParam: "321.123"
+        },
+        queryStringParameters: {
+          requiredQueryStringA: "abc",
+          requiredQueryStringB: JSON.stringify([1, 2, 3]),
+          optionalQueryString: "123abc"
+        },
+        multiValueQueryStringParameters: {
+          requiredMVQueryString: ["true", "false", "true"],
+          optionalMVQueryString: [
+            JSON.stringify({ a: true }),
+            JSON.stringify(false)
+          ]
+        },
+        stageVariables: {
+          requiredStageVariable: "asdf",
+          optionalStageVariable: JSON.stringify({ a: { b: { c: 4 } } })
+        },
+        body: JSON.stringify({
+          some: "string"
+        })
+      } as unknown) as Required<APIGatewayProxyEvent>;
+      const response = await mockHandler(mockEvent);
+      expect(response).toMatchSnapshot();
+    });
+  });
 });
 
 describe("when using strict mode", () => {
@@ -335,5 +474,3 @@ describe("when providing custom handlers", () => {
     });
   });
 });
-
-// TODO: Write tests for multi value parameters

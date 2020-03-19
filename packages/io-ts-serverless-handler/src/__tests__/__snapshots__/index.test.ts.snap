@@ -16,6 +16,13 @@ Object {
 }
 `;
 
+exports[`when using default options when exhaustively specifying all possible properties should be able to parse a full payload correctly 1`] = `
+Object {
+  "body": "{\\"requiredHeader\\":123,\\"optionalHeader\\":false,\\"requiredMVH\\":[\\"1970-01-01T00:00:00.000Z\\",\\"1970-01-01T00:01:40.000Z\\"],\\"optionalMVH\\":[\\"abc\\",null,\\"def\\",null,null],\\"requiredPathParamA\\":\\"string\\",\\"requiredPathParamB\\":\\"1970-01-01T00:16:39.999Z\\",\\"optionalPathParam\\":321.123,\\"requiredQueryStringA\\":\\"abc\\",\\"requiredQueryStringB\\":[1,2,3],\\"optionalQueryString\\":\\"123abc\\",\\"requiredMVQueryString\\":[true,false,true],\\"optionalMVQueryString\\":[{\\"a\\":true},false],\\"requiredStageVariable\\":\\"asdf\\",\\"optionalStageVariable\\":{\\"a\\":{\\"b\\":{\\"c\\":4}}},\\"body\\":{\\"some\\":\\"string\\"}}",
+  "statusCode": 200,
+}
+`;
+
 exports[`when using default options when providing extra parameters not defined in the codec should  not strip the extra parameters 1`] = `
 Object {
   "body": "{\\"headers\\":{},\\"multiValueHeaders\\":{},\\"pathParameters\\":{\\"something\\":\\"true\\"},\\"queryStringParameters\\":{\\"pageNumber\\":4,\\"extraParameter\\":\\"hello\\"},\\"multiValueQueryStringParameters\\":{},\\"stageVariables\\":{},\\"body\\":null}",
