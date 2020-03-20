@@ -18,6 +18,8 @@ jobs:
     env:
       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # Not the same as GITHUB_TOKEN
+      # This token authenticates on behalf of the maintainer, not github actions itself
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
       CC_SECRET: ${{ secrets.CC_SECRET }}
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
@@ -55,9 +57,13 @@ jobs:
         run: yarn codechecks
         working-directory: ./packages/io-ts-serverless-handler
         if: github.event_name != 'pull_request'
-      - name: Analyse Coverage
-        run: bash <(curl -s https://codecov.io/bash)
-        working-directory: ./packages/io-ts-serverless-handler
+      - name: Coveralls
+        uses: coverallsapp/github-action@v1.0.1
+        with:
+          # Not the same as GH_TOKEN
+          # See: https://help.github.com/en/actions/configuring-and-managing-workflows/authenticating-with-the-github_token
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: ./packages/io-ts-serverless-handler/coverage/lcov.info
       - name: Run Semantic Release
         run: yarn semantic-release
         working-directory: ./packages/io-ts-serverless-handler
