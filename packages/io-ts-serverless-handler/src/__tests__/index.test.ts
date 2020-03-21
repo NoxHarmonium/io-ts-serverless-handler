@@ -50,6 +50,23 @@ const mockContext: Context = {
 // tslint:disable: no-duplicate-string no-identical-functions no-big-function
 describe("when using default options", () => {
   const codecHandler = configureWrapper({});
+
+  describe("when the handler function does not return a promise", () => {
+    const mockHandler: HandlerFunction<{}, unknown> = (_, __, callback) => {
+      callback(undefined, {});
+    };
+    it("should throw", async () => {
+      const mockEvent = ({} as unknown) as APIGatewayProxyEvent;
+      const handler = codecHandler({}, mockHandler);
+
+      const result = handler(mockEvent, mockContext);
+      expect(result).rejects.toMatchInlineSnapshot(`
+        [Error: The callback handler form is not supported. Please return a promise from your handler function. 
+        See https://docs.aws.amazon.com/lambda/latest/dg/nodejs-handler.html#nodejs-handler-async]
+      `);
+    });
+  });
+
   describe("when the codec definition has a body", () => {
     const mockSchema = {
       queryStringParameters: t.type({
@@ -84,6 +101,7 @@ describe("when using default options", () => {
         expect(result).toMatchSnapshot();
       });
     });
+
     describe("when the payload is invalid", () => {
       it("should return a bad request", async () => {
         const mockEvent = ({
