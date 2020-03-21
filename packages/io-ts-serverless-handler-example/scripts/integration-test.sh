@@ -25,8 +25,14 @@ aws sts get-caller-identity > /dev/null || {
 }
 
 cleanup() {
+  EXIT_STATUS=$?  # Ensure original exit status is propagated
+  echo 'Logs for listProducts:'
+  yarn sls logs -s "$STAGE" -f listProducts || true
+  echo 'Logs for getProduct:'
+  yarn sls logs -s "$STAGE" -f getProduct || true
   echo 'Cleaning up!'
   yarn sls remove -s "$STAGE" --verbose
+  exit "$EXIT_STATUS"
 }
 
 pushd "$CURRENT_DIR/.."

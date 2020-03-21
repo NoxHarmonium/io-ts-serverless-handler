@@ -1,20 +1,30 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
-import * as t from "io-ts";
-
-/**
- * The parts of APIGatewayProxyEvent that we want to validate
- */
-export type ExtractableParameters = Pick<
+import {
   APIGatewayProxyEvent,
-  // tslint:disable-next-line: max-union-size
+  APIGatewayProxyResult,
+  Handler
+} from "aws-lambda";
+import * as t from "io-ts";
+import { Except } from "type-fest";
+
+// tslint:disable-next-line: max-union-size
+type ExtractableKeys =
   | "headers"
   | "multiValueHeaders"
   | "pathParameters"
   | "queryStringParameters"
   | "multiValueQueryStringParameters"
   | "stageVariables"
-  | "body"
->;
+  | "body";
+
+/**
+ * The parts of APIGatewayProxyEvent that we want to validate
+ */
+export type ExtractableParameters = Pick<APIGatewayProxyEvent, ExtractableKeys>;
+
+/**
+ * The parts of APIGatewayProxyEvent that we just want to pass through
+ */
+export type PassableParameters = Except<APIGatewayProxyEvent, ExtractableKeys>;
 
 /**
  * The most general case of codec that can be assigned to an event map
@@ -46,9 +56,10 @@ export type ValueMap<EventMap extends EventMapBase> = {
  * The type of function that handled the decoded event properties
  * and returns a value that will be transformed and sent back to the client
  */
-export type HandlerFunction<EventMap extends EventMapBase, ReturnType> = (
-  values: ValueMap<EventMap>
-) => Promise<ReturnType>;
+export type HandlerFunction<
+  EventMap extends EventMapBase,
+  ReturnType
+> = Handler<PassableParameters & ValueMap<EventMap>, ReturnType>;
 
 /**
  * Takes the error output of a io-ts decode function and transforms it to
