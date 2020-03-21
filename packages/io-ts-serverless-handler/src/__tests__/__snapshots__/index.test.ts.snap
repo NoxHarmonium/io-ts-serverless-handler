@@ -11,14 +11,14 @@ Object {
 
 exports[`when providing custom handlers when the payload is valid should succeed 1`] = `
 Object {
-  "body": "{\\"result\\":{\\"hello\\":\\"there\\",\\"params\\":{\\"pageNumber\\":4}},\\"custom\\":true}",
+  "body": "{\\"result\\":{\\"hello\\":\\"there\\",\\"params\\":{\\"pageNumber\\":4},\\"awsRequestId\\":\\"mock ID\\"},\\"custom\\":true}",
   "statusCode": 200,
 }
 `;
 
 exports[`when using default options when exhaustively specifying all possible properties should be able to parse a full payload correctly 1`] = `
 Object {
-  "body": "{\\"requiredHeader\\":123,\\"optionalHeader\\":false,\\"requiredMVH\\":[\\"1970-01-01T00:00:00.000Z\\",\\"1970-01-01T00:01:40.000Z\\"],\\"optionalMVH\\":[\\"abc\\",null,\\"def\\",null,null],\\"requiredPathParamA\\":\\"string\\",\\"requiredPathParamB\\":\\"1970-01-01T00:16:39.999Z\\",\\"optionalPathParam\\":321.123,\\"requiredQueryStringA\\":\\"abc\\",\\"requiredQueryStringB\\":[1,2,3],\\"optionalQueryString\\":\\"123abc\\",\\"requiredMVQueryString\\":[true,false,true],\\"optionalMVQueryString\\":[{\\"a\\":true},false],\\"requiredStageVariable\\":\\"asdf\\",\\"optionalStageVariable\\":{\\"a\\":{\\"b\\":{\\"c\\":4}}},\\"body\\":{\\"some\\":\\"string\\"}}",
+  "body": "{\\"requiredHeader\\":123,\\"optionalHeader\\":false,\\"requiredMVH\\":[\\"1970-01-01T00:00:00.000Z\\",\\"1970-01-01T00:01:40.000Z\\"],\\"optionalMVH\\":[\\"abc\\",null,\\"def\\",null,null],\\"requiredPathParamA\\":\\"string\\",\\"requiredPathParamB\\":\\"1970-01-01T00:16:39.999Z\\",\\"optionalPathParam\\":321.123,\\"requiredQueryStringA\\":\\"abc\\",\\"requiredQueryStringB\\":[1,2,3],\\"optionalQueryString\\":\\"123abc\\",\\"requiredMVQueryString\\":[true,false,true],\\"optionalMVQueryString\\":[{\\"a\\":true},false],\\"requiredStageVariable\\":\\"asdf\\",\\"optionalStageVariable\\":{\\"a\\":{\\"b\\":{\\"c\\":4}}},\\"body\\":{\\"some\\":\\"string\\"},\\"awsRequestId\\":\\"mock ID\\"}",
   "statusCode": 200,
 }
 `;
@@ -41,7 +41,7 @@ Object {
 
 exports[`when using default options when the codec definition has a body when the payload is valid should succeed 1`] = `
 Object {
-  "body": "{\\"pageSize\\":6,\\"body\\":{\\"message\\":\\"hello\\"}}",
+  "body": "{\\"pageSize\\":6,\\"body\\":{\\"message\\":\\"hello\\"},\\"awsRequestId\\":\\"mock ID\\"}",
   "statusCode": 200,
 }
 `;
@@ -76,14 +76,14 @@ Object {
 
 exports[`when using strict mode when providing extra parameters not defined in the codec should strip the extra parameters 1`] = `
 Object {
-  "body": "{\\"queryStringParameters\\":{\\"pageNumber\\":4}}",
+  "body": "{\\"params\\":{\\"queryStringParameters\\":{\\"pageNumber\\":4}},\\"context\\":{\\"callbackWaitsForEmptyEventLoop\\":false,\\"functionName\\":\\"mockFunction\\",\\"functionVersion\\":\\"2\\",\\"invokedFunctionArn\\":\\"arn:aws:lambda:ap-southeast-2:1234456776:function:\${FunctionName}\\",\\"memoryLimitInMB\\":\\"1024\\",\\"awsRequestId\\":\\"mock ID\\",\\"logGroupName\\":\\"group name\\",\\"logStreamName\\":\\"stream name\\",\\"identity\\":{\\"cognitoIdentityId\\":\\"mock-identity-id\\",\\"cognitoIdentityPoolId\\":\\"mock-identity-pool-id\\"},\\"clientContext\\":{\\"client\\":{\\"installationId\\":\\"string\\",\\"appTitle\\":\\"string\\",\\"appVersionName\\":\\"string\\",\\"appVersionCode\\":\\"string\\",\\"appPackageName\\":\\"string\\"},\\"Custom\\":\\"some custom\\",\\"env\\":{\\"platformVersion\\":\\"string\\",\\"platform\\":\\"string\\",\\"make\\":\\"string\\",\\"model\\":\\"string\\",\\"locale\\":\\"string\\"}}}}",
   "statusCode": 200,
 }
 `;
 
 exports[`when using strict mode when providing the exact required input should succeed 1`] = `
 Object {
-  "body": "{\\"queryStringParameters\\":{\\"pageNumber\\":4}}",
+  "body": "{\\"params\\":{\\"queryStringParameters\\":{\\"pageNumber\\":4}},\\"context\\":{\\"callbackWaitsForEmptyEventLoop\\":false,\\"functionName\\":\\"mockFunction\\",\\"functionVersion\\":\\"2\\",\\"invokedFunctionArn\\":\\"arn:aws:lambda:ap-southeast-2:1234456776:function:\${FunctionName}\\",\\"memoryLimitInMB\\":\\"1024\\",\\"awsRequestId\\":\\"mock ID\\",\\"logGroupName\\":\\"group name\\",\\"logStreamName\\":\\"stream name\\",\\"identity\\":{\\"cognitoIdentityId\\":\\"mock-identity-id\\",\\"cognitoIdentityPoolId\\":\\"mock-identity-pool-id\\"},\\"clientContext\\":{\\"client\\":{\\"installationId\\":\\"string\\",\\"appTitle\\":\\"string\\",\\"appVersionName\\":\\"string\\",\\"appVersionCode\\":\\"string\\",\\"appPackageName\\":\\"string\\"},\\"Custom\\":\\"some custom\\",\\"env\\":{\\"platformVersion\\":\\"string\\",\\"platform\\":\\"string\\",\\"make\\":\\"string\\",\\"model\\":\\"string\\",\\"locale\\":\\"string\\"}}}}",
   "statusCode": 200,
 }
 `;

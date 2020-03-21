@@ -16,11 +16,17 @@ export const listProducts = codecHandler(
       pageSize: NumberFromString
     })
   },
-  async ({ queryStringParameters: { pageNumber, pageSize } }) => {
+  async (
+    { queryStringParameters: { pageNumber, pageSize } },
+    { awsRequestId }
+  ) => {
     const resolvedPageSize = pageSize === undefined ? 10 : pageSize;
     const resolvedPageNumber = pageNumber === undefined ? 0 : pageNumber;
     const productPage = chunk(products, resolvedPageSize)[resolvedPageNumber];
-    return productPage === undefined ? [] : productPage;
+    return {
+      awsRequestId,
+      data: productPage ?? []
+    };
   }
 );
 
@@ -30,11 +36,14 @@ export const getProduct = codecHandler(
       id: NumberFromString
     })
   },
-  async ({ pathParameters: { id } }) => {
+  async ({ pathParameters: { id } }, { awsRequestId }) => {
     const productPage = products[id];
     if (productPage === undefined) {
       throw new Error("product not found");
     }
-    return productPage;
+    return {
+      awsRequestId,
+      data: productPage
+    };
   }
 );

@@ -1,4 +1,8 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import {
+  APIGatewayProxyEvent,
+  APIGatewayProxyResult,
+  Context
+} from "aws-lambda";
 import { isLeft } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { jsonFromStringCodec } from "./codecs";
@@ -13,7 +17,8 @@ import {
   ExtractableParameters,
   HandlerConfig,
   HandlerFunction,
-  ValueMap
+  ValueMap,
+  PassableParameters
 } from "./types";
 import { removeEmpty, typedKeys } from "./utils";
 
@@ -46,7 +51,10 @@ export const configureWrapper = (config: HandlerConfig | undefined) => <
 >(
   codecMaps: EventMap,
   handlerFn: HandlerFunction<EventMap, ReturnType>
-) => async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+) => async (
+  event: APIGatewayProxyEvent,
+  context: Context
+): Promise<APIGatewayProxyResult> => {
   const {
     validationErrorHandler,
     unhandledErrorHandler,
@@ -96,8 +104,26 @@ export const configureWrapper = (config: HandlerConfig | undefined) => <
     return validationErrorHandler(decoded.left);
   }
 
+  // Extract out the parameters that we don't want to transform
+  const passableParameters: PassableParameters = {
+    httpMethod: event.httpMethod,
+    isBase64Encoded: event.isBase64Encoded,
+    path: event.path,
+    requestContext: event.requestContext,
+    resource: event.resource
+  };
+
   try {
-    const result = await handlerFn(decoded.right);
+    const result = await handlerFn(
+      { ...passableParameters, ...decoded.right },
+      context,
+      () => {
+        throw new Error(
+          "The callback handler form is not supported. Please use promises. \n" +
+            "See https://docs.aws.amazon.com/lambda/latest/dg/nodejs-handler.html#nodejs-handler-async"
+        );
+      }
+    );
 
     // Everything went OK and the handler function returned a value
     // This would probably be returned with a 200 status code
