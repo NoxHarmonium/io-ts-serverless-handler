@@ -19,7 +19,8 @@
     "no-throw": false,
     "no-if-statement": false,
     "no-console": false,
-    "no-try": false
+    "no-try": false,
+    "no-reject": false
   },
   "rulesDirectory": []
 }

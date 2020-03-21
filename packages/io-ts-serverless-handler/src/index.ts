@@ -41,6 +41,10 @@ const defaultEvent: Required<ExtractableParameters> = {
   body: null
 };
 
+const callbackUnsupportedMessage =
+  "The callback handler form is not supported. Please return a promise from your handler function. \n" +
+  "See https://docs.aws.amazon.com/lambda/latest/dg/nodejs-handler.html#nodejs-handler-async";
+
 /**
  * Takes an optional config object and returns a function that wraps
  * a handler function
@@ -113,24 +117,25 @@ export const configureWrapper = (config: HandlerConfig | undefined) => <
     resource: event.resource
   };
 
-  try {
-    const result = await handlerFn(
-      { ...passableParameters, ...decoded.right },
-      context,
-      () => {
-        throw new Error(
-          "The callback handler form is not supported. Please use promises. \n" +
-            "See https://docs.aws.amazon.com/lambda/latest/dg/nodejs-handler.html#nodejs-handler-async"
-        );
-      }
-    );
+  const result = handlerFn(
+    { ...passableParameters, ...decoded.right },
+    context,
+    () => {
+      console.warn(callbackUnsupportedMessage);
+    }
+  );
 
-    // Everything went OK and the handler function returned a value
-    // This would probably be returned with a 200 status code
-    return successHandler(result);
-  } catch (e) {
-    // An error occurred that was not captured by the handler
-    // This would probably be returned with a 500 status code
-    return unhandledErrorHandler(e);
+  if (result === undefined) {
+    return Promise.reject(new Error(callbackUnsupportedMessage));
+  } else {
+    return (
+      result
+        // Everything went OK and the handler function returned a value
+        // This would probably be returned with a 200 status code
+        .then(successHandler)
+        // An error occurred that was not captured by the handler
+        // This would probably be returned with a 500 status code
+        .catch(unhandledErrorHandler)
+    );
   }
 };
