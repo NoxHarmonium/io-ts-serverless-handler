@@ -57,6 +57,11 @@ jobs:
         run: yarn codechecks
         working-directory: ./packages/io-ts-serverless-handler
         if: github.event_name != 'pull_request'
+      # Coveralls doesn't like it when you gernerate coverage in a subpackage of a mono repo
+      # Thanks: https://github.com/coverallsapp/github-action/issues/17#issuecomment-552218079
+      - name: Fix coverage for Coveralls
+        run: sed -i -E "s/^SF:(.+)$/SF:packages\/io-ts-serverless-handler\/\1/" coverage/lcov.info
+        working-directory: ./packages/io-ts-serverless-handler
       - name: Coveralls
         uses: coverallsapp/github-action@v1.0.1
         with:
