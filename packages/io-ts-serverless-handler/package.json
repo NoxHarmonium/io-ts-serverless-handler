@@ -1,6 +1,6 @@
 {
   "name": "io-ts-serverless-handler",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "A simple wrapper for Serverless Framework HTTP handlers to remove the boilerplate of using io-ts codecs to validate and extract request parameters",
   "main": "lib/index.js",
   "module": "es6/index.js",
