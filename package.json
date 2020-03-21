@@ -24,32 +24,30 @@
     "cz-conventional-changelog": "3.1.0",
     "fp-ts": "^2.5.3",
     "husky": "^4.2.3",
-    "io-ts-types": "^0.5.6",
     "io-ts": "^2.1.2",
-    "jest-each": "^25.1.0",
+    "io-ts-types": "^0.5.6",
     "jest": "^25.1.0",
+    "jest-each": "^25.1.0",
     "monocle-ts": "^2.1.0",
     "newtype-ts": "^0.3.4",
-    "patch-package": "^6.2.1",
-    "prettier-check": "^2.0.0",
     "prettier": "^1.19.1",
+    "prettier-check": "^2.0.0",
     "semantic-release": "^17.0.4",
-    "serverless-offline": "^6.0.0",
     "serverless": "^1.67.0",
+    "serverless-offline": "^6.0.0",
     "ts-jest": "^25.2.1",
+    "tslint": "^6.1.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",
     "tslint-immutable": "^6.0.1",
     "tslint-sonarts": "^1.9.0",
-    "tslint": "^6.1.0",
     "type-coverage": "^2.4.0",
     "typecov": "^0.2.2",
     "typescript": "^3.8.3",
     "yarn-or-npm": "^3.0.1"
   },
   "scripts": {
-    "commit": "git-cz",
-    "postinstall": "patch-package"
+    "commit": "git-cz"
   },
   "config": {
     "commitizen": {
