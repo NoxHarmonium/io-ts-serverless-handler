@@ -21,7 +21,7 @@ describe("jsonFromStringCodec", () => {
       [false],
       [""],
       ["dfsjlsf"],
-      ['{ "hello": 4 ']
+      ['{ "hello": 4 '],
     ]).test("fails when decoding [%p]", (input: unknown) => {
       expect.assertions(2);
       const result = jsonFromStringCodec.decode(input);

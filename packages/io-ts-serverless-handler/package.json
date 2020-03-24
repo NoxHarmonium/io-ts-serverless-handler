@@ -21,7 +21,7 @@
     "test": "jest --coverage",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "lint-fix": "tslint --fix -p tsconfig.json -c tslint.json",
-    "format-check": "prettier-check src/**/*",
+    "format-check": "prettier --check '{src,test}/**/*.{ts,tsx}'",
     "type-coverage": "type-coverage --strict --detail --ignore-catch",
     "format": "prettier --write '{src,test}/**/*.{ts,tsx}'",
     "quality-check": "yon test && yon lint && yon format-check && yon type-coverage",

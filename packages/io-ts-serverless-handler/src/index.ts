@@ -1,7 +1,7 @@
 import {
   APIGatewayProxyEvent,
   APIGatewayProxyResult,
-  Context
+  Context,
 } from "aws-lambda";
 import { isLeft } from "fp-ts/lib/Either";
 import * as t from "io-ts";
@@ -9,7 +9,7 @@ import { jsonFromStringCodec } from "./codecs";
 import {
   defaultSuccessHandler,
   defaultUnhandledErrorHandler,
-  defaultValidationErrorHandler
+  defaultValidationErrorHandler,
 } from "./default-handlers";
 import {
   BaseCodecType,
@@ -18,7 +18,7 @@ import {
   HandlerConfig,
   HandlerFunction,
   ValueMap,
-  PassableParameters
+  PassableParameters,
 } from "./types";
 import { removeEmpty, typedKeys } from "./utils";
 
@@ -28,7 +28,7 @@ const defaultConfig: Required<HandlerConfig> = {
   validationErrorHandler: defaultValidationErrorHandler,
   unhandledErrorHandler: defaultUnhandledErrorHandler,
   successHandler: defaultSuccessHandler,
-  strict: false
+  strict: false,
 };
 
 const defaultEvent: Required<ExtractableParameters> = {
@@ -38,7 +38,7 @@ const defaultEvent: Required<ExtractableParameters> = {
   queryStringParameters: {},
   multiValueQueryStringParameters: {},
   stageVariables: {},
-  body: null
+  body: null,
 };
 
 const callbackUnsupportedMessage =
@@ -63,10 +63,10 @@ export const configureWrapper = (config: HandlerConfig | undefined) => <
     validationErrorHandler,
     unhandledErrorHandler,
     successHandler,
-    strict
+    strict,
   } = {
     ...defaultConfig,
-    ...config
+    ...config,
   };
 
   const keys = typedKeys<EventMapBase>(codecMaps);
@@ -81,7 +81,7 @@ export const configureWrapper = (config: HandlerConfig | undefined) => <
 
   const decodeBody = (body: BaseCodecType): Partial<ValueMap<EventMap>> => ({
     // type-coverage:ignore-next-line - io-ts types use any
-    body: jsonFromStringCodec.pipe(body)
+    body: jsonFromStringCodec.pipe(body),
   });
 
   const mergedCodecs =
@@ -91,7 +91,7 @@ export const configureWrapper = (config: HandlerConfig | undefined) => <
           ...mergedParameterCodecs,
           // The body must first be a valid string, then valid JSON then parsed
           // and validated against the codec that is provided in the codec map
-          ...decodeBody(codecMaps.body)
+          ...decodeBody(codecMaps.body),
         };
 
   // Turn the root codec definition into an actual codec
@@ -99,7 +99,7 @@ export const configureWrapper = (config: HandlerConfig | undefined) => <
   // Make io-ts do the hard work of validating the event object
   const decoded = rootCodec.decode({
     ...defaultEvent,
-    ...removeEmpty(event)
+    ...removeEmpty(event),
   }) as t.Validation<ValueMap<EventMap>>;
 
   if (isLeft(decoded)) {
@@ -114,7 +114,7 @@ export const configureWrapper = (config: HandlerConfig | undefined) => <
     isBase64Encoded: event.isBase64Encoded,
     path: event.path,
     requestContext: event.requestContext,
-    resource: event.resource
+    resource: event.resource,
   };
 
   const result = handlerFn(

@@ -13,7 +13,7 @@ export const jsonFromStringCodec = new t.Type<JsonValue, string, unknown>(
   "JSONFromString",
   (u): u is JsonValue => u !== undefined,
   (u, c) =>
-    either.chain(t.string.validate(u, c), s => {
+    either.chain(t.string.validate(u, c), (s) => {
       try {
         return t.success(jsonParser.parse(s));
       } catch (e) {
@@ -24,5 +24,5 @@ export const jsonFromStringCodec = new t.Type<JsonValue, string, unknown>(
         }
       }
     }),
-  a => JSON.stringify(a)
+  (a) => JSON.stringify(a)
 );

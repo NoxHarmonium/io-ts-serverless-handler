@@ -1,7 +1,7 @@
 import {
   APIGatewayProxyEvent,
   APIGatewayProxyResult,
-  Handler
+  Handler,
 } from "aws-lambda";
 import * as t from "io-ts";
 import { Except } from "type-fest";

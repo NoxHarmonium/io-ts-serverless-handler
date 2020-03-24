@@ -8,14 +8,14 @@ describe("removeEmpty", () => {
       c: "string",
       d: 0,
       e: false,
-      f: {}
+      f: {},
     };
     it("should filter out keys with null values", () => {
       expect(removeEmpty(testObj)).toEqual({
         c: "string",
         d: 0,
         e: false,
-        f: {}
+        f: {},
       });
     });
   });
@@ -24,7 +24,7 @@ describe("removeEmpty", () => {
       c: "string",
       d: 0,
       e: false,
-      f: {}
+      f: {},
     };
     it("should leave the payload untouched", () => {
       expect(removeEmpty(testObj)).toEqual(testObj);
