@@ -3,7 +3,7 @@ import * as t from "io-ts";
 import {
   defaultSuccessHandler,
   defaultUnhandledErrorHandler,
-  defaultValidationErrorHandler
+  defaultValidationErrorHandler,
 } from "../default-handlers";
 
 // tslint:disable: no-duplicate-string
@@ -39,7 +39,7 @@ describe("defaultSuccessHandler", () => {
       expect.assertions(1);
       expect(
         defaultSuccessHandler({
-          some: "object"
+          some: "object",
         })
       ).toMatchSnapshot();
     });

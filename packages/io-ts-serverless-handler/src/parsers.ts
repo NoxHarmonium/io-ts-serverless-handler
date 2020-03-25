@@ -9,5 +9,5 @@ import { Parser } from ".";
  * different parsers.
  */
 export const jsonParser: Parser<JsonValue> = {
-  parse: JSON.parse
+  parse: JSON.parse,
 };

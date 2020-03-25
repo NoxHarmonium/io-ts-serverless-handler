@@ -18,7 +18,7 @@ const mockContext: Context = {
   logStreamName: "stream name",
   identity: {
     cognitoIdentityId: "mock-identity-id",
-    cognitoIdentityPoolId: "mock-identity-pool-id"
+    cognitoIdentityPoolId: "mock-identity-pool-id",
   },
   clientContext: {
     client: {
@@ -26,7 +26,7 @@ const mockContext: Context = {
       appTitle: "string",
       appVersionName: "string",
       appVersionCode: "string",
-      appPackageName: "string"
+      appPackageName: "string",
     },
     Custom: "some custom",
     env: {
@@ -34,8 +34,8 @@ const mockContext: Context = {
       platform: "string",
       make: "string",
       model: "string",
-      locale: "string"
-    }
+      locale: "string",
+    },
   },
   getRemainingTimeInMillis: () => 60000,
 
@@ -43,7 +43,7 @@ const mockContext: Context = {
   done: (_?: Error, _result?: unknown) => {},
   fail: (_error: Error | string): void => {},
   // type-coverage:ignore-next-line
-  succeed: (_messageOrObject: any): void => {}
+  succeed: (_messageOrObject: any): void => {},
   // tslint:enable: no-empty no-any
 };
 
@@ -70,11 +70,11 @@ describe("when using default options", () => {
   describe("when the codec definition has a body", () => {
     const mockSchema = {
       queryStringParameters: t.type({
-        pageSize: NumberFromString
+        pageSize: NumberFromString,
       }),
       body: t.type({
-        message: t.string
-      })
+        message: t.string,
+      }),
     };
     const mockHandler: HandlerFunction<typeof mockSchema, unknown> = async (
       { queryStringParameters: { pageSize }, body },
@@ -82,17 +82,17 @@ describe("when using default options", () => {
     ) => ({
       pageSize: pageSize + 2,
       body,
-      awsRequestId
+      awsRequestId,
     });
     describe("when the payload is valid", () => {
       it("should succeed", async () => {
         const mockEvent = ({
           queryStringParameters: {
-            pageSize: "4"
+            pageSize: "4",
           },
           body: JSON.stringify({
-            message: "hello"
-          })
+            message: "hello",
+          }),
         } as unknown) as APIGatewayProxyEvent;
         const handler = codecHandler(mockSchema, mockHandler);
 
@@ -106,9 +106,9 @@ describe("when using default options", () => {
       it("should return a bad request", async () => {
         const mockEvent = ({
           queryStringParameters: {
-            pageSize: "4"
+            pageSize: "4",
           },
-          body: 5
+          body: 5,
         } as unknown) as APIGatewayProxyEvent;
         const handler = codecHandler(mockSchema, mockHandler);
 
@@ -118,9 +118,9 @@ describe("when using default options", () => {
       it("should list every error", async () => {
         const mockEvent = ({
           queryStringParameters: {
-            pageSize: "not-a-number"
+            pageSize: "not-a-number",
           },
-          body: false
+          body: false,
         } as unknown) as APIGatewayProxyEvent;
         const handler = codecHandler(mockSchema, mockHandler);
 
@@ -132,8 +132,8 @@ describe("when using default options", () => {
       const brokenHandler = codecHandler(
         {
           queryStringParameters: t.type({
-            pageNumber: NumberFromString
-          })
+            pageNumber: NumberFromString,
+          }),
         },
         // tslint:disable-next-line: no-reject
         async () => Promise.reject(new Error("oops"))
@@ -141,8 +141,8 @@ describe("when using default options", () => {
       it("should return an internal server error", async () => {
         const mockEvent = ({
           queryStringParameters: {
-            pageNumber: "4"
-          }
+            pageNumber: "4",
+          },
         } as unknown) as APIGatewayProxyEvent;
 
         const result = await brokenHandler(mockEvent, mockContext);
@@ -156,29 +156,29 @@ describe("when using default options", () => {
       {
         queryStringParameters: t.type({
           pageNumber: NumberFromString,
-          pageSize: t.union([t.undefined, NumberFromString])
+          pageSize: t.union([t.undefined, NumberFromString]),
         }),
         headers: t.partial({
-          someHeader: NumberFromString
-        })
+          someHeader: NumberFromString,
+        }),
       },
       async ({
         queryStringParameters: { pageNumber, pageSize },
-        headers: { someHeader }
+        headers: { someHeader },
       }) => ({
         hello: "there",
         params: {
           pageNumber,
           pageSize,
-          someHeader
-        }
+          someHeader,
+        },
       })
     );
     describe("when the optional parameter isn't supplied", () => {
       const mockEvent = ({
         queryStringParameters: {
-          pageNumber: "4"
-        }
+          pageNumber: "4",
+        },
       } as unknown) as APIGatewayProxyEvent;
       it("should succeed", async () => {
         const result = await handler(mockEvent, mockContext);
@@ -189,9 +189,9 @@ describe("when using default options", () => {
     describe("when the optional parameter is empty", () => {
       const mockEvent = ({
         queryStringParameters: {
-          pageNumber: "4"
+          pageNumber: "4",
         },
-        headers: {}
+        headers: {},
       } as unknown) as APIGatewayProxyEvent;
       it("should succeed", async () => {
         const result = await handler(mockEvent, mockContext);
@@ -202,9 +202,9 @@ describe("when using default options", () => {
     describe("when the optional parameter is null", () => {
       const mockEvent = ({
         queryStringParameters: {
-          pageNumber: "4"
+          pageNumber: "4",
         },
-        headers: null
+        headers: null,
       } as unknown) as APIGatewayProxyEvent;
       it("should succeed", async () => {
         const result = await handler(mockEvent, mockContext);
@@ -216,11 +216,11 @@ describe("when using default options", () => {
       const mockEvent = ({
         queryStringParameters: {
           pageNumber: "4",
-          pageSize: "9"
+          pageSize: "9",
         },
         headers: {
-          someHeader: "6"
-        }
+          someHeader: "6",
+        },
       } as unknown) as APIGatewayProxyEvent;
       it("should succeed", async () => {
         const result = await handler(mockEvent, mockContext);
@@ -233,19 +233,19 @@ describe("when using default options", () => {
     const handler = codecHandler(
       {
         queryStringParameters: t.type({
-          pageNumber: NumberFromString
-        })
+          pageNumber: NumberFromString,
+        }),
       },
-      async params => params
+      async (params) => params
     );
     const mockEvent = ({
       queryStringParameters: {
         pageNumber: "4",
-        extraParameter: "hello"
+        extraParameter: "hello",
       },
       pathParameters: {
-        something: "true"
-      }
+        something: "true",
+      },
     } as unknown) as APIGatewayProxyEvent;
     it("should  not strip the extra parameters", async () => {
       const result = await handler(mockEvent, mockContext);
@@ -258,55 +258,58 @@ describe("when using default options", () => {
     const mockSchema = {
       headers: t.intersection([
         t.type({
-          requiredHeader: NumberFromString
+          requiredHeader: NumberFromString,
         }),
         t.partial({
-          optionalHeader: t.union([BooleanFromString, t.null])
-        })
+          optionalHeader: t.union([BooleanFromString, t.null]),
+        }),
       ]),
       multiValueHeaders: t.intersection([
         t.type({ requiredMVH: t.array(DateFromISOString) }),
         t.partial({
-          optionalMVH: t.union([t.array(t.union([t.string, t.null])), t.null])
-        })
+          optionalMVH: t.union([t.array(t.union([t.string, t.null])), t.null]),
+        }),
       ]),
       pathParameters: t.intersection([
         t.type({
           requiredPathParamA: t.string,
-          requiredPathParamB: DateFromISOString
+          requiredPathParamB: DateFromISOString,
         }),
         t.partial({
-          optionalPathParam: NumberFromString
-        })
+          optionalPathParam: NumberFromString,
+        }),
       ]),
       queryStringParameters: t.intersection([
         t.type({
           requiredQueryStringA: t.string,
-          requiredQueryStringB: jsonFromStringCodec.pipe(t.array(t.number))
+          requiredQueryStringB: jsonFromStringCodec.pipe(t.array(t.number)),
         }),
         t.partial({
-          optionalQueryString: t.union([t.string, t.null])
-        })
+          optionalQueryString: t.union([t.string, t.null]),
+        }),
       ]),
       multiValueQueryStringParameters: t.intersection([
         t.type({
-          requiredMVQueryString: t.array(BooleanFromString)
+          requiredMVQueryString: t.array(BooleanFromString),
         }),
         t.partial({
-          optionalMVQueryString: t.union([t.array(jsonFromStringCodec), t.null])
-        })
+          optionalMVQueryString: t.union([
+            t.array(jsonFromStringCodec),
+            t.null,
+          ]),
+        }),
       ]),
       stageVariables: t.intersection([
         t.type({
-          requiredStageVariable: t.string
+          requiredStageVariable: t.string,
         }),
         t.partial({
-          optionalStageVariable: t.union([jsonFromStringCodec, t.null])
-        })
+          optionalStageVariable: t.union([jsonFromStringCodec, t.null]),
+        }),
       ]),
       body: t.type({
-        some: t.string
-      })
+        some: t.string,
+      }),
     };
     const mockHandler = codecHandler(
       mockSchema,
@@ -317,19 +320,19 @@ describe("when using default options", () => {
           pathParameters: {
             requiredPathParamA,
             requiredPathParamB,
-            optionalPathParam
+            optionalPathParam,
           },
           queryStringParameters: {
             requiredQueryStringA,
             requiredQueryStringB,
-            optionalQueryString
+            optionalQueryString,
           },
           multiValueQueryStringParameters: {
             requiredMVQueryString,
-            optionalMVQueryString
+            optionalMVQueryString,
           },
           stageVariables: { requiredStageVariable, optionalStageVariable },
-          body
+          body,
         },
         { awsRequestId }
       ) => ({
@@ -348,7 +351,7 @@ describe("when using default options", () => {
         requiredStageVariable,
         optionalStageVariable,
         body,
-        awsRequestId
+        awsRequestId,
       })
     );
 
@@ -356,39 +359,39 @@ describe("when using default options", () => {
       const mockEvent = ({
         headers: {
           requiredHeader: "123",
-          optionalHeader: "false"
+          optionalHeader: "false",
         },
         multiValueHeaders: {
           requiredMVH: [
             new Date(0).toISOString(),
-            new Date(100000).toUTCString()
+            new Date(100000).toUTCString(),
           ],
-          optionalMVH: ["abc", null, "def", null, null]
+          optionalMVH: ["abc", null, "def", null, null],
         },
         pathParameters: {
           requiredPathParamA: "string",
           requiredPathParamB: new Date(999999).toISOString(),
-          optionalPathParam: "321.123"
+          optionalPathParam: "321.123",
         },
         queryStringParameters: {
           requiredQueryStringA: "abc",
           requiredQueryStringB: JSON.stringify([1, 2, 3]),
-          optionalQueryString: "123abc"
+          optionalQueryString: "123abc",
         },
         multiValueQueryStringParameters: {
           requiredMVQueryString: ["true", "false", "true"],
           optionalMVQueryString: [
             JSON.stringify({ a: true }),
-            JSON.stringify(false)
-          ]
+            JSON.stringify(false),
+          ],
         },
         stageVariables: {
           requiredStageVariable: "asdf",
-          optionalStageVariable: JSON.stringify({ a: { b: { c: 4 } } })
+          optionalStageVariable: JSON.stringify({ a: { b: { c: 4 } } }),
         },
         body: JSON.stringify({
-          some: "string"
-        })
+          some: "string",
+        }),
       } as unknown) as Required<APIGatewayProxyEvent>;
       const response = await mockHandler(mockEvent, mockContext);
       expect(response).toMatchSnapshot();
@@ -398,24 +401,24 @@ describe("when using default options", () => {
 
 describe("when using strict mode", () => {
   const strictCodecHandler = configureWrapper({
-    strict: true
+    strict: true,
   });
   const strictHandler = strictCodecHandler(
     {
       queryStringParameters: t.type({
-        pageNumber: NumberFromString
-      })
+        pageNumber: NumberFromString,
+      }),
     },
     async (params, context) => ({
       params,
-      context
+      context,
     })
   );
   describe("when providing the exact required input", () => {
     const mockEvent = ({
       queryStringParameters: {
-        pageNumber: "4"
-      }
+        pageNumber: "4",
+      },
     } as unknown) as APIGatewayProxyEvent;
     it("should succeed", async () => {
       const result = await strictHandler(mockEvent, mockContext);
@@ -427,11 +430,11 @@ describe("when using strict mode", () => {
     const mockEvent = ({
       queryStringParameters: {
         pageNumber: "4",
-        extraParameter: "hello"
+        extraParameter: "hello",
       },
       pathParameters: {
-        something: "true"
-      }
+        something: "true",
+      },
     } as unknown) as APIGatewayProxyEvent;
     it("should strip the extra parameters", async () => {
       const result = await strictHandler(mockEvent, mockContext);
@@ -443,51 +446,51 @@ describe("when using strict mode", () => {
 
 describe("when providing custom handlers", () => {
   const customCodecHandler = configureWrapper({
-    successHandler: result => ({
+    successHandler: (result) => ({
       statusCode: 200,
       body: JSON.stringify({
         result,
-        custom: true
-      })
+        custom: true,
+      }),
     }),
-    unhandledErrorHandler: e => ({
+    unhandledErrorHandler: (e) => ({
       statusCode: 500,
       body: JSON.stringify({
         oops: JSON.stringify(e),
-        custom: true
-      })
+        custom: true,
+      }),
     }),
-    validationErrorHandler: e => ({
+    validationErrorHandler: (e) => ({
       statusCode: 400,
       body: JSON.stringify({
         error: e,
-        custom: true
-      })
-    })
+        custom: true,
+      }),
+    }),
   });
   const handler = customCodecHandler(
     {
       queryStringParameters: t.type({
-        pageNumber: NumberFromString
-      })
+        pageNumber: NumberFromString,
+      }),
     },
     async ({ queryStringParameters: { pageNumber } }, { awsRequestId }) => ({
       hello: "there",
       params: {
-        pageNumber
+        pageNumber,
       },
-      awsRequestId
+      awsRequestId,
     })
   );
   describe("when the payload is valid", () => {
     it("should succeed", async () => {
       const mockEvent = ({
         queryStringParameters: {
-          pageNumber: "4"
+          pageNumber: "4",
         },
         body: JSON.stringify({
-          message: "hello"
-        })
+          message: "hello",
+        }),
       } as unknown) as APIGatewayProxyEvent;
 
       const result = await handler(mockEvent, mockContext);
@@ -499,9 +502,9 @@ describe("when providing custom handlers", () => {
     it("should return a bad request", async () => {
       const mockEvent = ({
         queryStringParameters: {
-          pageSize: "4"
+          pageSize: "4",
         },
-        body: 5
+        body: 5,
       } as unknown) as APIGatewayProxyEvent;
 
       const result = await handler(mockEvent, mockContext);
@@ -510,9 +513,9 @@ describe("when providing custom handlers", () => {
     it("should list every error", async () => {
       const mockEvent = ({
         queryStringParameters: {
-          pageSize: "string"
+          pageSize: "string",
         },
-        body: false
+        body: false,
       } as unknown) as APIGatewayProxyEvent;
 
       const result = await handler(mockEvent, mockContext);
@@ -523,8 +526,8 @@ describe("when providing custom handlers", () => {
     const brokenHandler = customCodecHandler(
       {
         queryStringParameters: t.type({
-          pageNumber: NumberFromString
-        })
+          pageNumber: NumberFromString,
+        }),
       },
       // tslint:disable-next-line: no-reject
       async () => Promise.reject(new Error("oops"))
@@ -532,8 +535,8 @@ describe("when providing custom handlers", () => {
     it("should return a internal server error", async () => {
       const mockEvent = ({
         queryStringParameters: {
-          pageNumber: "4"
-        }
+          pageNumber: "4",
+        },
       } as unknown) as APIGatewayProxyEvent;
 
       const result = await brokenHandler(mockEvent, mockContext);
