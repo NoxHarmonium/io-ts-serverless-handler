@@ -813,10 +813,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
-"@kingdarboja/serverless-plugin-typescript@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@kingdarboja/serverless-plugin-typescript/-/serverless-plugin-typescript-1.2.0.tgz#207c2fa44f5824930d6e3f1a5f042482c251fa71"
-  integrity sha512-YpiAHrk0oLJfqADgiWCJmyhIHhuhU8ZrFYNF0N2z9HfWSRBktDAi9PFmKBUI5tqRMtB1feqW1GbEkdmDuVsRBA==
+"@kingdarboja/serverless-plugin-typescript@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@kingdarboja/serverless-plugin-typescript/-/serverless-plugin-typescript-1.2.1.tgz#8c28e1e694ecde8e8293d2c17d37b0b560e89e77"
+  integrity sha512-a8q+8tck75dKeiK5WXsCN81ELlg1cMUT1LYVa+zdRDZq7Bv2pU2ZFyeYh7Trm6Z4gDkupfP5kQTLUxMu5uQ4sw==
   dependencies:
     fs-extra "^8.1.0"
     globby "^11.0.0"
