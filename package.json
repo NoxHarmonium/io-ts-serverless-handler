@@ -18,7 +18,7 @@
     "@kingdarboja/serverless-plugin-typescript": "^1.2.1",
     "@types/aws-lambda": "^8.10.47",
     "@types/faker": "^4.1.11",
-    "@types/jest": "^25.1.4",
+    "@types/jest": "^25.1.5",
     "@types/node": "^13.9.8",
     "commitizen": "^4.0.3",
     "cz-conventional-changelog": "3.1.0",
