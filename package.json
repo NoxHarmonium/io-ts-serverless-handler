@@ -30,7 +30,7 @@
     "jest-each": "^25.2.6",
     "monocle-ts": "^2.1.0",
     "newtype-ts": "^0.3.4",
-    "prettier": "^2.0.2",
+    "prettier": "^2.0.4",
     "semantic-release": "^17.0.4",
     "serverless": "^1.67.0",
     "serverless-offline": "^6.1.4",
