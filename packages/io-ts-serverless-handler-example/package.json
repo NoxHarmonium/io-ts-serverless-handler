@@ -19,7 +19,7 @@
     "lodash": "^4.17.15",
     "monocle-ts": "^2.1.0",
     "newtype-ts": "^0.3.4",
-    "source-map-support": "^0.5.16"
+    "source-map-support": "^0.5.17"
   },
   "author": "Sean Dawson <contact@seandawson.info>",
   "license": "Apache-2.0",
