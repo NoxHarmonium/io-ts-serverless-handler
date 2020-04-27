@@ -35,7 +35,7 @@
     "serverless": "^1.68.0",
     "serverless-offline": "^6.1.4",
     "ts-jest": "^25.4.0",
-    "tslint": "^6.1.1",
+    "tslint": "^6.1.2",
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",
     "tslint-immutable": "^6.0.1",
