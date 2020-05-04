@@ -21,7 +21,7 @@
     "@types/jest": "^25.2.1",
     "@types/node": "^13.13.4",
     "commitizen": "^4.0.5",
-    "cz-conventional-changelog": "3.1.0",
+    "cz-conventional-changelog": "3.2.0",
     "fp-ts": "^2.5.4",
     "husky": "^4.2.5",
     "io-ts": "^2.1.3",
