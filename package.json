@@ -32,7 +32,7 @@
     "newtype-ts": "^0.3.4",
     "prettier": "^2.0.5",
     "semantic-release": "^17.0.7",
-    "serverless": "^1.71.1",
+    "serverless": "^1.71.3",
     "serverless-offline": "^6.1.5",
     "ts-jest": "^25.5.1",
     "tslint": "^6.1.2",
