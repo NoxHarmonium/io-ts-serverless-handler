@@ -42,7 +42,7 @@
     "tslint-sonarts": "^1.9.0",
     "type-coverage": "^2.6.1",
     "typecov": "^0.2.2",
-    "typescript": "^3.9.2",
+    "typescript": "^3.9.3",
     "yarn-or-npm": "^3.0.1"
   },
   "scripts": {
