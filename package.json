@@ -34,7 +34,7 @@
     "semantic-release": "^17.0.8",
     "serverless": "^1.71.3",
     "serverless-offline": "^6.3.0",
-    "ts-jest": "^25.5.1",
+    "ts-jest": "^26.0.0",
     "tslint": "^6.1.2",
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",
