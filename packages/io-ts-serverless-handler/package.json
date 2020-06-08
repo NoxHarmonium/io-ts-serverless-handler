@@ -32,7 +32,7 @@
     "handlebars": "4.5.0"
   },
   "dependencies": {
-    "type-fest": "^0.13.1"
+    "type-fest": "^0.15.0"
   },
   "typeCoverage": {
     "atLeast": 100
