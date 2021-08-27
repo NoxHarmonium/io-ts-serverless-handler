@@ -30,6 +30,7 @@ jobs:
       CC_SECRET: ${{ secrets.CC_SECRET }}
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
     strategy:
       matrix:
