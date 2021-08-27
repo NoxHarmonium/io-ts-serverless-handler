@@ -55,10 +55,6 @@ jobs:
           echo "Checking from commit [$FROM] to [$GITHUB_SHA]..."
           yarn commitlint --from "${FROM}" --to "${GITHUB_SHA}" --verbose
         if: github.event_name != 'pull_request'
-      - name: Run Codechecks
-        run: yarn codechecks
-        working-directory: ./packages/io-ts-serverless-handler
-        if: github.event_name != 'pull_request'
       # Coveralls doesn't like it when you gernerate coverage in a subpackage of a mono repo
       # Thanks: https://github.com/coverallsapp/github-action/issues/17#issuecomment-552218079
       - name: Fix coverage for Coveralls
