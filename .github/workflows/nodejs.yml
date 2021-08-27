@@ -29,6 +29,7 @@ jobs:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       CC_SECRET: ${{ secrets.CC_SECRET }}
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     strategy:
       matrix:
