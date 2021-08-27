@@ -76,6 +76,8 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+        if: github.ref == 'refs/heads/master'
       - name: Run Integration Test
         run: yarn integration-test
         working-directory: ./packages/io-ts-serverless-handler-example
+        if: github.ref == 'refs/heads/master'
