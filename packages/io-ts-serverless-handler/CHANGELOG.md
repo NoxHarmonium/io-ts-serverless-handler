@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.2](https://github.com/NoxHarmonium/io-ts-serverless-handler/compare/v2.1.1...v2.1.2) (2021-08-27)
+
+
+### Bug Fixes
+
+* expose GH_TOKEN ([9e3a6e6](https://github.com/NoxHarmonium/io-ts-serverless-handler/commit/9e3a6e6acbe459321373e22a6c490e41b737d904))
+* force release for dependency updates ([fb14d52](https://github.com/NoxHarmonium/io-ts-serverless-handler/commit/fb14d522483bb8062c5be98450826fc6776b141f))
+
 ## [2.1.1](https://github.com/NoxHarmonium/io-ts-serverless-handler/compare/v2.1.0...v2.1.1) (2020-03-21)
 
 
