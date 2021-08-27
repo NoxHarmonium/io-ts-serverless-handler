@@ -3,6 +3,15 @@
 
 name: Node.js CI
 
+permissions:
+  actions: write
+  checks: write
+  contents: write
+  deployments: write
+  issues: write
+  packages: write
+  statuses: write
+
 on:
   push:
     branches: ["**"]
@@ -18,9 +27,6 @@ jobs:
     env:
       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      # Not the same as GITHUB_TOKEN
-      # This token authenticates on behalf of the maintainer, not github actions itself
-      GH_TOKEN: ${{ secrets.GH_TOKEN }}
       CC_SECRET: ${{ secrets.CC_SECRET }}
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
