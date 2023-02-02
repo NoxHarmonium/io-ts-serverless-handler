@@ -31,7 +31,7 @@
     "monocle-ts": "^2.1.1",
     "newtype-ts": "^0.3.4",
     "prettier": "^2.0.5",
-    "semantic-release": "^17.2.3",
+    "semantic-release": "^19.0.3",
     "serverless": "^1.72.0",
     "serverless-offline": "^6.4.0",
     "ts-jest": "^25.5.1",
